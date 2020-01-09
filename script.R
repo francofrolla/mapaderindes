@@ -150,7 +150,7 @@ semivariograma<-function(){
 
 modelo_semivariograma<-function(){
     variograma <- variogram(Rinde~1, datos2, cutoff=250)
-    modelovgm <- fit.variogram(variograma, fit.method=1, vgm(sill,modelo,range,nugget))
+    modelovgm <<- fit.variogram(variograma, fit.method=1, vgm(sill,modelo,range,nugget))
     print(plot(variograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza"))
     #ver SCE
     print(attr(modelovgm , 'SSErr'))
