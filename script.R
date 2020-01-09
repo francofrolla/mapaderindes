@@ -157,11 +157,11 @@ modelo_semivariograma<-function(){
 }
 
 mapa_kriging<-function(distancia){
-    data2<-remove.duplicates(datos2)
+    data2<<-remove.duplicates(datos2)
     print("Datos originales")
-    nrow(datos2)
+    print(nrow(datos2))
     print("Datos filtrados")
-    nrow(data2)
+    print(nrow(data2))
     Kg_wls <<- krige(Rinde~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=distancia)
     print(spplot(Kg_wls["var1.pred"], col.regions=rev(heat.colors(100))))
 }
