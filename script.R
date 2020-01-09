@@ -40,7 +40,7 @@ ingresar_datos<-function(){
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
         #me quedo con la columna de Rinde.
         drops<-c("Rinde")
-        myshp <- myshp[,(names(myshp) %in% drops)]
+        myshp <<- myshp[,(names(myshp) %in% drops)]
         print(spplot(myshp["Rinde"]))
 }
 
