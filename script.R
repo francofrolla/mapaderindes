@@ -266,7 +266,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
 
           plot(vectorizado["var1.pred"], col=cols, border="NA",main=paste("Mapa de Rendimiento",nombre,sep=" "))
           max<-length(cortes)
-          legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title="kg/ha")
+          legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title=unidad_de_cosecha)
           mtext(detalleslote,side=1,cex=1)
           plot(h, col=k,main=paste("Histograma rendimiento"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
 
