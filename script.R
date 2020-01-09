@@ -27,7 +27,7 @@ instalar_paquetes<-function(){
 
 listar_archivos<-function(){
           lista<-list.files(getwd())
-          lista
+          print(lista)
 }
 
 ingresar_datos<-function(){
@@ -38,7 +38,7 @@ ingresar_datos<-function(){
         #me quedo con la columna de Rinde.
         drops<-c("Rinde")
         myshp <- myshp[,(names(myshp) %in% drops)]
-        spplot(myshp["Rinde"])
+        print(spplot(myshp["Rinde"]))
 }
 
 importar_poligono<-function(){
