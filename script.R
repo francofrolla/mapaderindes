@@ -171,169 +171,219 @@ validacion<-function(){
 
 
 exportar<-function(){
-if (que_mapa == "idw") {Kg_wls <<-prof.idw}
+          if (que_mapa == "idw") {Kg_wls <<-prof.idw}
 
-    Kg_wls<-na.omit(Kg_wls)
-    r<- raster(Kg_wls,layer=1)
-    #EXTRAIGO RASTER 
-    writeRaster(r, filename=paste(nombre,".tif",sep=""), bandorder='BIL', overwrite=TRUE)
-    valores<-na.omit(Kg_wls@data[,1])
-    cortes<-quantile(valores, probs = c(0,0.10,0.25,0.50,0.75,0.90,1))
+          Kg_wls<-na.omit(Kg_wls)
+          r<- raster(Kg_wls,layer=1)
+          writeRaster(r, filename=paste(nombre,".tif",sep=""), bandorder='BIL', overwrite=TRUE)
+          valores<-na.omit(Kg_wls@data[,1])
 
-    #reclasifico los valores continuos de raster por la calsificación de tomas.
-    values_tg<-unname(cortes)
+          if (version_simplificada == "no"){
+                cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
+                cortes<-quantile(valores, probs = c(0,0.10,0.25,0.50,0.75,0.90,1))
+                #reclasifico los valores continuos de raster por la calsificación de tomas.
+                values_tg<-unname(cortes)
 
-    lamatrix<-matrix(nrow=8,ncol=3)
+                lamatrix<-matrix(nrow=8,ncol=3)
+                lamatrix[1,1]<--Inf
+                lamatrix[1,2]<-values_tg[1]
+                lamatrix[1,3]<-values_tg[1]
+                lamatrix[8,1]<-values_tg[7]
+                lamatrix[8,2]<-Inf
+                lamatrix[8,3]<-values_tg[7]
 
-    lamatrix[1,1]<--Inf
-    lamatrix[1,2]<-values_tg[1]
-    lamatrix[1,3]<-values_tg[1]
-    lamatrix[8,1]<-values_tg[7]
-    lamatrix[8,2]<-Inf
-    lamatrix[8,3]<-values_tg[7]
+                for (i in 2:7){
+                a<-i-1
+                lamatrix[i,1]<-values_tg[a]
+                b<-i
+                lamatrix[i,2]<-values_tg[b]
+                a<-i
+                lamatrix[i,3]<-values_tg[a]
+                }
+          }
 
-    for (i in 2:7){
-    a<-i-1
-    lamatrix[i,1]<-values_tg[a]
-    b<-i
-    lamatrix[i,2]<-values_tg[b]
-    a<-i
-    lamatrix[i,3]<-values_tg[a]
+          if (version_simplificada == "si"){
+             cols <- c("#d73027","#fee08b","#d9ef8b","#1a9850")
+             cortes<-quantile(valores, probs =c(0.2,0.5,0.8,1))
+             #son 5
+              #reclasifico los valores continuos de raster por la calsificación de tomas.
+              values_tg<-unname(cortes)
 
-    }
-
-    rc <- reclassify(r, lamatrix,include.lowest=TRUE)
-    vectorizado<-rasterToPolygons(rc,na.rm=TRUE,dissolve=TRUE)
-    cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-    vectorizado@data$colores<-as.factor(unname(cortes))
-    #spplot(vectorizado1,zcol="var1.pred",col.region=as.vector(cols))
-    plot(vectorizado["var1.pred"],col=cols)
-    #EXTRAIGO SHAPE
-    writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
-    
-    #GENERO EL PDF CON UNA VISTA PREVIA DEL MAPA LOGRADO Y EL HISTOGRAMA
-    valores<-na.omit(Kg_wls@data[,1])
-    cortes<-quantile(valores, probs = c(0,0.10,0.25,0.50,0.75,0.90,1))
-    h <- hist(valores, breaks=20, plot=F) # h$breaks and h$mids
-    cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-    k <- cols[findInterval(h$breaks, unname(cortes), rightmost.closed=T, all.inside=F) + 1]
-    #plot(h, col=k,main=paste("Distribucion de rendimiento, Lote:", Lote),xlab= paste("Rendimiento",unidad_de_cosecha),ylab="Frecuencia")
+              lamatrix<-matrix(nrow=4,ncol=3)
+              lamatrix[1,1]<--Inf
+              lamatrix[1,2]<-values_tg[1]
+              lamatrix[1,3]<-values_tg[1]
+              lamatrix[4,1]<-values_tg[3]
+              lamatrix[4,2]<-Inf
+              lamatrix[4,3]<-values_tg[4]
 
 
+              for (i in 2:4){
+              a<-i-1
+              lamatrix[i,1]<-values_tg[a]
+              b<-i
+              lamatrix[i,2]<-values_tg[b]
+              a<-i
+              lamatrix[i,3]<-values_tg[a]
+              }
 
-    nombre1<-paste("Mapa de rendimiento-",Lote,".pdf",sep= "")
-    pdf(file= paste(ruta,"/",nombre1,sep=""))
-    #par(mar = c(2,2,2,2)
-     par(mfrow=c(1,1))
-
-
-    plot(vectorizado["var1.pred"], col=cols,main=paste("Mapa de Rendimiento",Lote,sep=" "))
-    legend("topleft",as.character(round(unname(cortes[1:7]),digits=2)),fill=cols,cex = 0.8,bty="n",title="kg/ha")
-    mtext(detalleslote,side=1,cex=1)
-    plot(h, col=k,main=paste("Rinde real lote: ","kg/ha"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
-
-    dev.off()
-    
-    #GENERO EL KML (que lio el XML!!!)
-    hacerkml<-function(){
-        proj4string(vectorizado) <<- CRS("+init=epsg:3857")
-        obj <- spTransform(vectorizado, CRS("+init=epsg:4326"))
-        inners<-c("")
-        outers<-c("")
-        union<-c("")
-        superkml<-c("")
-        stack<-c("")
-
-        cabezera<-c('<?xml version="1.0"?>
-                    <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
-                    <Document><Style id="1"><LineStyle><width>2.0</width><color>ff1400aa</color></LineStyle><PolyStyle><color>ff1400aa</color></PolyStyle></Style><Style id="2"><LineStyle><width>2.0</width><color>ff2730d7</color></LineStyle><PolyStyle><color>ff2730d7</color></PolyStyle></Style><Style id="3"><LineStyle><width>2.0</width><color>ff598dfc</color></LineStyle><PolyStyle><color>ff598dfc</color></PolyStyle></Style><Style id="4"><LineStyle><width>2.0</width><color>ff8be0fe</color></LineStyle><PolyStyle><color>ff8be0fe</color></PolyStyle></Style><Style id="5"><LineStyle><width>2.0</width><color>ff8befd9</color></LineStyle><PolyStyle><color>ff8befd9</color></PolyStyle></Style><Style id="6"><LineStyle><width>2.0</width><color>ff60cf91</color></LineStyle><PolyStyle><color>ff60cf91</color></PolyStyle></Style><Style id="7"><LineStyle><width>2.0</width><color>ff50981a</color></LineStyle><PolyStyle><color>ff50981a</color></PolyStyle></Style><Style id="8"><LineStyle><width>2.0</width><color>ff882754</color></LineStyle><PolyStyle><color>ff882754</color></PolyStyle></Style>
-                    <ScreenOverlay><name>Legend: Wetlands</name><Icon> <href>http://lmingenieria.com.ar/images/logo.png</href> </Icon> <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-                     <screenXY x="25" y="40" xunits="pixels" yunits="pixels"/>
-                    <rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
-                    <size x="0" y="0" xunits="pixels" yunits="pixels"/>
-                      </ScreenOverlay>')
-        #ACTIVAR PARA SACAR LOS MULTYPOLYGON Y SILENCIAR LOS DE ABAJO
-        #prefijo<-c('<Placemark><name>30</name><styleUrl>#1</styleUrl><Polygon>') 
-        #sufijo<-c('</Polygon></Placemark>')
-        fin<-c('</Document></kml>')
-
-        ########VARIANTE CON MULTYPOLYGON 
-
-        #prefijo<-c('<Placemark><name>1</name><styleUrl>#1</styleUrl><MultiGeometry>') 
-        sufijo<-c('</MultiGeometry></Placemark>')
-        prefijo.poligono<-c('<Polygon>') 
-        sufijo.poligono<-c('</Polygon>')
-
-        for (a in 1:length(obj@polygons)){
-
-          #if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 8}
-          if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 7}
-          if (obj$var1.pred[a] == unname(cortes[6])){estilo.id = 6}
-          if (obj$var1.pred[a] == unname(cortes[5])){estilo.id = 5}
-          if (obj$var1.pred[a] == unname(cortes[4])){estilo.id = 4}
-          if (obj$var1.pred[a] == unname(cortes[3])){estilo.id = 3}
-          if (obj$var1.pred[a] == unname(cortes[2])){estilo.id = 2}
-          if (obj$var1.pred[a] == unname(cortes[1])){estilo.id = 1}
-
-          prefijo<-sprintf('<Placemark><name>%s</name><styleUrl>#%s</styleUrl><MultiGeometry>',obj$var1.pred[a],estilo.id) 
+          }
 
 
-          #print(paste("corrida numero",a))  
-          agujeros<-c()
-          superkml<-c("")
-          for (i in 1:length(obj@polygons[[a]]@Polygons)){
-            agujero<-obj@polygons[[a]]@Polygons[[i]]@hole
-            agujeros<-c(agujeros,agujero)
-          }  
-          #print(agujeros)  
+          rc <- reclassify(r, lamatrix,include.lowest=TRUE)
+          vectorizado<-rasterToPolygons(rc,na.rm=TRUE,dissolve=TRUE)
+          vectorizado@data$colores<-as.factor(unname(cortes))
+          #spplot(vectorizado1,zcol="var1.pred",col.region=as.vector(cols))
+          plot(vectorizado["var1.pred"],col=cols,border="NA")
+          writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
+          #ACA ARMO EL PDF   
+          valores<-na.omit(Kg_wls@data[,1])
+          #cortes<-quantile(valores, probs = c(0,0.10,0.25,0.50,0.75,0.90,1))
+          h <- hist(valores, breaks=20, plot=F) # h$breaks and h$mids
+          #cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
+          k <- cols[findInterval(h$breaks, unname(cortes), rightmost.closed=T, all.inside=F) + 1]
+          #plot(h, col=k,main=paste("Distribucion de rendimiento, Lote:", Lote),xlab= paste("Rendimiento",unidad_de_cosecha),ylab="Frecuencia")
 
 
-          for (i in 1:length(agujeros)){
-            if(agujeros[i] == FALSE){
-              #obtengo el outboundary  
-              xyz<-obj@polygons[[a]]@Polygons[[i]]@coords
-              coords.out <- paste(xyz[,1], ',', xyz[,2], ',', 0, collapse='\n ', sep = "")  
-              outers<-sprintf('<outerBoundaryIs><LinearRing><coordinates>%s</coordinates></LinearRing></outerBoundaryIs>', coords.out)
-              if(is.na(agujeros[i+1])){
-                union<-paste(prefijo.poligono,outers,sufijo.poligono)
-                #union<-paste(prefijo,outers,sufijo)
-                superkml<-paste(superkml,union)
-                #stop("Se termino la ejecución porque no habia mas poligonos")
-              } else {    
-                repeat {
-                  if(agujeros[i+1] == TRUE){
-                    xyz<-obj@polygons[[a]]@Polygons[[i+1]]@coords
-                    coords.int <- paste(xyz[,1], ',', xyz[,2], ',', 0, collapse='\n ', sep = "")
-                    xt<-sprintf('<innerBoundaryIs><LinearRing><coordinates>%s</coordinates></LinearRing></innerBoundaryIs>',coords.int)
-                    inners<-paste(inners,xt)
-                    i<-i+1
+
+          nombre1<-paste("Mapa de rendimiento-",Lote,".pdf",sep= "")
+          pdf(file= paste(ruta,"/",nombre1,sep=""))
+          #par(mar = c(2,2,2,2)
+           par(mfrow=c(1,1))
+
+
+          plot(vectorizado["var1.pred"], col=cols, border="NA",main=paste("Mapa de Rendimiento",Lote,sep=" "))
+          max<-length(cortes)
+          legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title="kg/ha")
+          mtext(detalleslote,side=1,cex=1)
+          plot(h, col=k,main=paste("Rinde real lote: ","kg/ha"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
+
+          dev.off()
+          
+          hacerkml<-function(){
+            proj4string(vectorizado) <<- CRS("+init=epsg:3857")
+            obj <- spTransform(vectorizado, CRS("+init=epsg:4326"))
+            inners<-c("")
+            outers<-c("")
+            union<-c("")
+            superkml<-c("")
+            stack<-c("")
+
+            if (version_simplificada == "no"){
+            cabezera<-c('<?xml version="1.0"?>
+                        <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
+                        <Document><Style id="1"><LineStyle><width>2.0</width><color>ff1400aa</color></LineStyle><PolyStyle><color>ff1400aa</color></PolyStyle></Style><Style id="2"><LineStyle><width>2.0</width><color>ff2730d7</color></LineStyle><PolyStyle><color>ff2730d7</color></PolyStyle></Style><Style id="3"><LineStyle><width>2.0</width><color>ff598dfc</color></LineStyle><PolyStyle><color>ff598dfc</color></PolyStyle></Style><Style id="4"><LineStyle><width>2.0</width><color>ff8be0fe</color></LineStyle><PolyStyle><color>ff8be0fe</color></PolyStyle></Style><Style id="5"><LineStyle><width>2.0</width><color>ff8befd9</color></LineStyle><PolyStyle><color>ff8befd9</color></PolyStyle></Style><Style id="6"><LineStyle><width>2.0</width><color>ff60cf91</color></LineStyle><PolyStyle><color>ff60cf91</color></PolyStyle></Style><Style id="7"><LineStyle><width>2.0</width><color>ff50981a</color></LineStyle><PolyStyle><color>ff50981a</color></PolyStyle></Style><Style id="8"><LineStyle><width>2.0</width><color>ff882754</color></LineStyle><PolyStyle><color>ff882754</color></PolyStyle></Style>
+                        <ScreenOverlay><name>Legend: Wetlands</name><Icon> <href>http://lmingenieria.com.ar/images/logo.png</href> </Icon> <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+                         <screenXY x="25" y="40" xunits="pixels" yunits="pixels"/>
+                        <rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+                        <size x="0" y="0" xunits="pixels" yunits="pixels"/>
+                          </ScreenOverlay>')}
+             if (version_simplificada == "si"){
+            cabezera<-c('<?xml version="1.0"?>
+                        <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
+                        <Document><Style id="1"><LineStyle><width>0</width><color>ff2730d7</color></LineStyle><PolyStyle><color>ff2730d7</color></PolyStyle></Style><Style id="2"><LineStyle><width>0</width><color>ff8be0fe</color></LineStyle><PolyStyle><color>ff8be0fe</color></PolyStyle></Style><Style id="3"><LineStyle><width>0</width><color>ff8befd9</color></LineStyle><PolyStyle><color>ff8befd9</color></PolyStyle></Style><Style id="4"><LineStyle><width>0</width><color>ff50981a</color></LineStyle><PolyStyle><color>ff50981a</color></PolyStyle></Style><Style id="5"><LineStyle><width>2.0</width><color>ff8befd9</color></LineStyle><PolyStyle><color>ff8befd9</color></PolyStyle></Style><Style id="6"><LineStyle><width>2.0</width><color>ff60cf91</color></LineStyle><PolyStyle><color>ff60cf91</color></PolyStyle></Style><Style id="7"><LineStyle><width>2.0</width><color>ff50981a</color></LineStyle><PolyStyle><color>ff50981a</color></PolyStyle></Style><Style id="8"><LineStyle><width>2.0</width><color>ff882754</color></LineStyle><PolyStyle><color>ff882754</color></PolyStyle></Style>
+                        <ScreenOverlay><name>Legend: Wetlands</name><Icon> <href>http://lmingenieria.com.ar/images/logo.png</href> </Icon> <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+                         <screenXY x="25" y="40" xunits="pixels" yunits="pixels"/>
+                        <rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+                        <size x="0" y="0" xunits="pixels" yunits="pixels"/>
+                          </ScreenOverlay>')}
+            #ACTIVAR PARA SACAR LOS MULTYPOLYGON Y SILENCIAR LOS DE ABAJO
+            #prefijo<-c('<Placemark><name>30</name><styleUrl>#1</styleUrl><Polygon>') 
+            #sufijo<-c('</Polygon></Placemark>')
+            fin<-c('</Document></kml>')
+
+            ########VARIANTE CON MULTYPOLYGON 
+
+            #prefijo<-c('<Placemark><name>1</name><styleUrl>#1</styleUrl><MultiGeometry>') 
+            sufijo<-c('</MultiGeometry></Placemark>')
+            prefijo.poligono<-c('<Polygon>') 
+            sufijo.poligono<-c('</Polygon>')
+
+            for (a in 1:length(obj@polygons)){
+
+              if (version_simplificada == "no"){
+              #if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 8}
+              if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 7}
+              if (obj$var1.pred[a] == unname(cortes[6])){estilo.id = 6}
+              if (obj$var1.pred[a] == unname(cortes[5])){estilo.id = 5}
+              if (obj$var1.pred[a] == unname(cortes[4])){estilo.id = 4}
+              if (obj$var1.pred[a] == unname(cortes[3])){estilo.id = 3}
+              if (obj$var1.pred[a] == unname(cortes[2])){estilo.id = 2}
+              if (obj$var1.pred[a] == unname(cortes[1])){estilo.id = 1}
+              }
+
+              if (version_simplificada == "si"){
+              if (obj$var1.pred[a] == unname(cortes[4])){estilo.id = 4}
+              if (obj$var1.pred[a] == unname(cortes[3])){estilo.id = 3}
+              if (obj$var1.pred[a] == unname(cortes[2])){estilo.id = 2}
+              if (obj$var1.pred[a] == unname(cortes[1])){estilo.id = 1}
+              }
+
+
+
+              prefijo<-sprintf('<Placemark><name>%s</name><styleUrl>#%s</styleUrl><MultiGeometry>',obj$var1.pred[a],estilo.id) 
+
+
+              #print(paste("corrida numero",a))  
+              agujeros<-c()
+              superkml<-c("")
+              for (i in 1:length(obj@polygons[[a]]@Polygons)){
+                agujero<-obj@polygons[[a]]@Polygons[[i]]@hole
+                agujeros<-c(agujeros,agujero)
+              }  
+              #print(agujeros)  
+
+
+
+
+              for (i in 1:length(agujeros)){
+                if(agujeros[i] == FALSE){
+                  #obtengo el outboundary  
+                  xyz<-obj@polygons[[a]]@Polygons[[i]]@coords
+                  coords.out <- paste(xyz[,1], ',', xyz[,2], ',', 0, collapse='\n ', sep = "")  
+                  outers<-sprintf('<outerBoundaryIs><LinearRing><coordinates>%s</coordinates></LinearRing></outerBoundaryIs>', coords.out)
+                  if(is.na(agujeros[i+1])){
+                    union<-paste(prefijo.poligono,outers,sufijo.poligono)
+                    #union<-paste(prefijo,outers,sufijo)
+                    superkml<-paste(superkml,union)
+                    #stop("Se termino la ejecución porque no habia mas poligonos")
+                  } else {    
+                    repeat {
+                      if(agujeros[i+1] == TRUE){
+                        xyz<-obj@polygons[[a]]@Polygons[[i+1]]@coords
+                        coords.int <- paste(xyz[,1], ',', xyz[,2], ',', 0, collapse='\n ', sep = "")
+                        xt<-sprintf('<innerBoundaryIs><LinearRing><coordinates>%s</coordinates></LinearRing></innerBoundaryIs>',coords.int)
+                        inners<-paste(inners,xt)
+                        i<-i+1
+                      }
+                      if (agujeros[i+1] == FALSE  | is.na(agujeros[i+1])){
+                        union<-paste(prefijo.poligono,outers,inners,sufijo.poligono)
+                        #activar para sacar los multypolygons
+                        #union<-paste(prefijo,outers,inners,sufijo)
+                        inners<-c("")
+                        outers<-c("")
+                        #print("era false")
+                        #print(i+1)
+                        break
+                      }
+                    }
                   }
-                  if (agujeros[i+1] == FALSE  | is.na(agujeros[i+1])){
-                    union<-paste(prefijo.poligono,outers,inners,sufijo.poligono)
-                    #activar para sacar los multypolygons
-                    #union<-paste(prefijo,outers,inners,sufijo)
-                    inners<-c("")
-                    outers<-c("")
-                    #print("era false")
-                    #print(i+1)
-                    break
-                  }
+                  superkml<-paste(superkml,union)
+                  #superkml<-paste(prefijo.poligono,superkml,union,sufijo.poligono)
+                  #stack<-paste(stack,superkml)
+                } else {#print("era verdadero")
                 }
               }
-              superkml<-paste(superkml,union)
-              #superkml<-paste(prefijo.poligono,superkml,union,sufijo.poligono)
-              #stack<-paste(stack,superkml)
-            } else {#print("era verdadero")
+              stack<-paste(stack,prefijo,superkml,sufijo)
+
             }
+
+
+            write(paste(cabezera,stack,fin),"mapa interpolado.kml")
+
           }
-          stack<-paste(stack,prefijo,superkml,sufijo)
-
-        }
-
-
-        write(paste(cabezera,stack,fin),"mapa interpolado.kml")
-
-      }
-    hacerkml()
+      hacerkml()
+      
+          
 }
 
