@@ -137,12 +137,12 @@ inliers<-function(){
 
 idw <-function(){
     prof.idw <- idw(Rinde~1, datos2, gri,nmax=5)
-    spplot(prof.idw["var1.pred"], main = "")
+    print(spplot(prof.idw["var1.pred"], main = ""))
 }
 
 semivariograma<-function(){
     semivariograma <- variogram(Rinde~1, datos2, cutoff=250)
-    plot(semivariograma,main="",xlab="Distancia",ylab="Semivarianza")
+    print(plot(semivariograma,main="",xlab="Distancia",ylab="Semivarianza"))
 }
 
 modelo_semivariograma<-function(){
