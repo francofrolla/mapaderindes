@@ -182,7 +182,7 @@ validacion<-function(distancia){
 #version_simplificada<-"si"  
 
 
-exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplificada){
+exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           if (que_mapa == "idw") {Kg_wls <<-prof.idw}
 
           Kg_wls<-na.omit(Kg_wls)
@@ -258,17 +258,17 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplifica
 
 
           ruta<-getwd()
-          nombre1<-paste("Mapa de rendimiento-",Lote,".pdf",sep= "")
+          nombre1<-paste("Mapa de rendimiento-",nombre,".pdf",sep= "")
           pdf(file= paste(ruta,"/",nombre1,sep=""))
           #par(mar = c(2,2,2,2)
            par(mfrow=c(1,1))
 
 
-          plot(vectorizado["var1.pred"], col=cols, border="NA",main=paste("Mapa de Rendimiento",Lote,sep=" "))
+          plot(vectorizado["var1.pred"], col=cols, border="NA",main=paste("Mapa de Rendimiento",nombre,sep=" "))
           max<-length(cortes)
           legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title="kg/ha")
           mtext(detalleslote,side=1,cex=1)
-          plot(h, col=k,main=paste("Rinde real lote: ","kg/ha"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
+          plot(h, col=k,main=paste("Histograma rendimiento"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
 
           dev.off()
           
@@ -391,10 +391,10 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplifica
             }
 
 
-            write(paste(cabezera,stack,fin), paste(nombre,"kml",sep=""))
+            write(paste(cabezera,stack,fin), paste(nombre,".kml",sep=""))
 
           }
-      hacerkml()
+   hacerkml()
  
           
 }
