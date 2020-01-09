@@ -25,7 +25,7 @@ instalar_paquetes<-function(){
           require(spdep)
 }
 
-listar_archivos<-function{
+listar_archivos<-function(){
           lista<-list.files(getwd())
           lista
 }
