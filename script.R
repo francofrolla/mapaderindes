@@ -138,7 +138,7 @@ inliers<-function(){
 
 }
 
-idw <-function(){
+mapa_idw <-function(){
     prof.idw <- idw(Rinde~1, datos2, gri,nmax=5)
     print(spplot(prof.idw["var1.pred"], main = ""))
 }
@@ -156,7 +156,7 @@ modelo_semivariograma<-function(){
     print(attr(modelovgm , 'SSErr'))
 }
 
-kriging<-function(distancia){
+mapa_kriging<-function(distancia){
     data2<-remove.duplicates(datos2)
     print("Datos originales")
     nrow(datos2)
