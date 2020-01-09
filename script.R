@@ -27,10 +27,10 @@ instalar_paquetes<-function(){
 
 listar_archivos<-function(){
           lista<-list.files(getwd())
-          #largo<-length(lista)
-          #vector<-c(seq(1:largo))
-          #lista<-data.frame(vector,lista)
-          data.frame(lista)
+          largo<-length(lista)
+          vector<-c(seq(1:largo))
+          lista<-data.frame(vector,lista)
+          print(data.frame(lista))
 }
 
 ingresar_datos<-function(){
