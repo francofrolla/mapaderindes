@@ -391,7 +391,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplifica
             }
 
 
-            write(paste(cabezera,stack,fin),"mapa interpolado.kml")
+            write(paste(cabezera,stack,fin), paste(nombre,"kml",sep="")
 
           }
       hacerkml()
