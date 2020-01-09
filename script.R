@@ -156,24 +156,33 @@ modelo_semivariograma<-function(){
     print(attr(modelovgm , 'SSErr'))
 }
 
-kriging<-function(){
+kriging<-function(distancia){
     data2<-remove.duplicates(datos2)
     print("Datos originales")
     nrow(datos2)
     print("Datos filtrados")
     nrow(data2)
-    Kg_wls <- krige(Rinde~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=distancia)
+    Kg_wls <<- krige(Rinde~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=distancia)
     print(spplot(Kg_wls["var1.pred"], col.regions=rev(heat.colors(100))))
 }
 
-validacion<-function(){
+validacion<-function(distancia){
     require(automap)
-    Kg_wls1 <- krige.cv(Rinde~1, data2, model = modelovgm, maxdist=20)
+    Kg_wls1 <- krige.cv(Rinde~1, data2, model = modelovgm, maxdist=distancia)
     print(compare.cv(list(krige.cv_output = na.omit(Kg_wls1))))
 }
 
 
-exportar<-function(){
+##COMPLETAR ESTOS VALORES CON LOS CORRECTOS####
+#nombre<-"San Jose 1"
+#que_mapa<-"kriging"
+#detalleslote <-"aaaaa"
+#unidad_de_cosecha<-"tn/ha"
+#Lote<- "La prueba4"
+#version_simplificada<-"si"  
+
+
+exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplificada){
           if (que_mapa == "idw") {Kg_wls <<-prof.idw}
 
           Kg_wls<-na.omit(Kg_wls)
@@ -237,7 +246,7 @@ exportar<-function(){
           vectorizado<-rasterToPolygons(rc,na.rm=TRUE,dissolve=TRUE)
           vectorizado@data$colores<-as.factor(unname(cortes))
           #spplot(vectorizado1,zcol="var1.pred",col.region=as.vector(cols))
-          plot(vectorizado["var1.pred"],col=cols,border="NA")
+          print(plot(vectorizado["var1.pred"],col=cols,border="NA"))
           writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
           #ACA ARMO EL PDF   
           valores<-na.omit(Kg_wls@data[,1])
