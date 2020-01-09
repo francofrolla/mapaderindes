@@ -391,7 +391,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,Lote,version_simplifica
             }
 
 
-            write(paste(cabezera,stack,fin), paste(nombre,"kml",sep="")
+            write(paste(cabezera,stack,fin), paste(nombre,"kml",sep=""))
 
           }
       hacerkml()
