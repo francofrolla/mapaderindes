@@ -29,8 +29,8 @@ listar_archivos<-function(){
           lista<-list.files(getwd())
           largo<-length(lista)
           vector<-c(seq(1:largo))
-          lista<-data.frame(vector,lista)
-          print(data.frame(lista))
+          lista1<-data.frame(vector,lista)
+          print(lista1)
 }
 
 ingresar_datos<-function(){
