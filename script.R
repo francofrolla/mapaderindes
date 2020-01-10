@@ -29,12 +29,12 @@ listar_archivos<-function(){
           lista<-list.files(getwd())
           largo<-length(lista)
           vector<-c(seq(1:largo))
-          lista<<-data.frame(vector,lista)
-          print(lista)
+          lista1<<-data.frame(vector,lista)
+          print(lista1)
 }
 
 ingresar_datos<-function(){
-        myshp <- readOGR(lista[indicador_archivos])
+        myshp <- readOGR(lista1[indicador_archivos])
         proj4string(myshp) <- CRS("+init=epsg:4326")
         #reproyecto a metros pseudo mercator
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
@@ -45,7 +45,7 @@ ingresar_datos<-function(){
 }
 
 importar_poligono<-function(){
-      ruta_datos<-paste(getwd(),"/",lista[indicador_archivos],sep="")  
+      ruta_datos<-paste(getwd(),"/",lista1[indicador_archivos],sep="")  
       poligono<-readShapePoly(ruta_datos)
       proj4string(poligono) <- CRS("+init=epsg:4326")
       poligono <- spTransform(poligono, CRS("+init=epsg:3857"))
