@@ -30,7 +30,7 @@ listar_archivos<-function(){
           largo<-length(lista)
           vector<-c(seq(1:largo))
           lista<<-data.frame(vector,lista)
-          print(lista1)
+          print(lista)
 }
 
 ingresar_datos<-function(){
