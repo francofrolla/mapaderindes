@@ -269,7 +269,10 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           max<-length(cortes)
           legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title=unidad_de_cosecha)
           mtext(detalleslote,side=1,cex=1)
+          mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
+
           plot(h, col=k,main=paste("Histograma rendimiento"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
+          mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
 
           dev.off()
           
