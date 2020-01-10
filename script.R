@@ -33,8 +33,9 @@ listar_archivos<-function(){
           print(lista1)
 }
 
-ingresar_datos<-function(){
-        myshp <- readOGR(lista1[indicador_archivos])
+ingresar_datos<-function(indicador_archivos){
+        ruta_datos<-paste(getwd(),"/",lista1$lista[indicador_archivos],sep="")  
+        myshp <- readOGR(ruta_datos)
         proj4string(myshp) <- CRS("+init=epsg:4326")
         #reproyecto a metros pseudo mercator
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
@@ -44,7 +45,7 @@ ingresar_datos<-function(){
         print(spplot(myshp["Rinde"]))
 }
 
-importar_poligono<-function(){
+importar_poligono<-function(indicador_archivos){
       ruta_datos<-paste(getwd(),"/",lista1[indicador_archivos],sep="")  
       poligono<-readShapePoly(ruta_datos)
       proj4string(poligono) <- CRS("+init=epsg:4326")
