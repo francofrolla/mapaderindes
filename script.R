@@ -29,7 +29,7 @@ listar_archivos<-function(){
           lista<-list.files(getwd())
           largo<-length(lista)
           vector<-c(seq(1:largo))
-          lista1<<-data.frame(vector,lista)
+          lista<<-data.frame(vector,lista)
           print(lista1)
 }
 
