@@ -46,7 +46,7 @@ ingresar_datos<-function(indicador_archivos){
 }
 
 importar_poligono<-function(indicador_archivos){
-      ruta_datos<-paste(getwd(),"/",lista1[indicador_archivos],sep="")  
+      ruta_datos<-paste(getwd(),"/",lista1$lista[indicador_archivos],sep="")  
       poligono<-readShapePoly(ruta_datos)
       proj4string(poligono) <- CRS("+init=epsg:4326")
       poligono <- spTransform(poligono, CRS("+init=epsg:3857"))
