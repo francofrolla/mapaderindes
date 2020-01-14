@@ -1,12 +1,13 @@
+
+
 ##Shape=vector point
 ##Rinde=field Shape
 ##Poligono=vector polygon
-##Salidas = string Atención! borre esto y asigne un nombre para los archivos de salida.
 ##Distancia = number 40
-
+##showplots
 ##output=output raster
 
-##output_plots_to_html
+#output_plots_to_html
 ##showplots
 
 
@@ -21,19 +22,17 @@ poligono <- as_Spatial(Poligono)
 proj4string(datos) <- CRS(proj4string(datos))
 
 
-
-
-print("ARMO GRILLA DE MUESTREO")
+>print("ARMO GRILLA DE MUESTREO")
 grdpts <- makegrid(poligono, cellsize = 5)
 spgrd <- SpatialPoints(grdpts, proj4string = CRS(proj4string(poligono)))
 spgrdWithin <- SpatialPixels(spgrd[poligono,])
 par(mfrow= c(1,1))
-plot(spgrdWithin,col = "red", pch = 10, cex = 0.2,xlab="X",ylab="Y")
+>plot(spgrdWithin,col = "red", pch = 10, cex = 0.2,xlab="X",ylab="Y")
 gri<-spgrdWithin
 print(str(gri))
 print(CRS(proj4string(poligono)))
 
-print("ARMO VARIOGRAMA")
+>print("ARMO VARIOGRAMA")
 require(gstat)
 
 semivariograma <- variogram(get(Rinde)~1, datos, cutoff=250)
@@ -65,10 +64,10 @@ modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,di
 plot(semivariograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza")
 
 data2<-remove.duplicates(datos)
-print("Datos originales")
-print(nrow(datos))
-print("Datos filtrados")
-print(nrow(data2))
+>print("Datos originales")
+>print(nrow(datos))
+>print("Datos filtrados")
+>print(nrow(data2))
 
 crs(data2)<-NA
 crs(gri)<-NA
