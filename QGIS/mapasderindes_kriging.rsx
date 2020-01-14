@@ -1,5 +1,3 @@
-
-
 ##Shape=vector point
 ##Rinde=field Shape
 ##Poligono=vector polygon
