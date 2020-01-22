@@ -51,17 +51,19 @@ seleccion_modelo<-function(){
                 print(i)
 		modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelos[i],distancia,nugget))
 	 	error<-(attr(modelovgm , 'SSErr'))
+			print(modelos[i])
+			print(error)
 			if(error < error1){
                         modelo_final <<- modelos[i]
 		        error1<-error
- 			print(modelo_final)	
-			print(error1)	
+ 			>print(paste("Por ahora el mejor modelo es",modelo_final))	
+				
                         }
             }
 }
 
 suppressWarnings(seleccion_modelo())
-print(paste("Modelo final",modelo_final))
+>print(paste("Modelo final",modelo_final))
 modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,distancia,nugget))
 plot(semivariograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza")
 
