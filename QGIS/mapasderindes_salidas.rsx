@@ -1,5 +1,4 @@
 ##Raster= raster
-##Salidas=string Lote 1.
 ##Output=output vector
 ##Carpeta= folder
 ##Nombre = string Lote prueba 1
