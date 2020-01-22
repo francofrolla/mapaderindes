@@ -41,10 +41,10 @@ nugget<-semivariograma[1,3]
 distancia<-max(semivariograma$dist)
 
 modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",distancia,nugget))
-error1<-(attr(modelovgm , 'SSErr'))
+error1<-attr(modelovgm , 'SSErr')
+modelo_final = "Sph"
 
 
-modelo_final = "aaa"
 seleccion_modelo<-function(){
 	modelos<-c("Sph","Exp","Lin","Gau","Ste","Mat")
 		for (i in 1:length(modelos)){
@@ -61,6 +61,7 @@ seleccion_modelo<-function(){
 }
 
 suppressWarnings(seleccion_modelo())
+print(paste("Modelo final",modelo_final))
 modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,distancia,nugget))
 plot(semivariograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza")
 
@@ -73,7 +74,7 @@ data2<-remove.duplicates(datos)
 crs(data2)<-NA
 crs(gri)<-NA
 
-Kg_wls <- krige(get(Rinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=40)
+Kg_wls <- krige(Rinde~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=40)
 
 print("Armamos el Raster para ver en QGIS")
 raster<- raster(Kg_wls,layer=1)
