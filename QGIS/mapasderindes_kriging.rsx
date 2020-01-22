@@ -1,5 +1,5 @@
 ##Shape=vector point
-##Rinde=field Shape
+##enestacolumnaestaelrinde=field Shape
 ##Poligono=vector polygon
 ##Distancia = number 40
 ##showplots
@@ -33,7 +33,7 @@ print(CRS(proj4string(poligono)))
 >print("ARMO VARIOGRAMA")
 require(gstat)
 
-semivariograma <- variogram(Rinde~1, datos, cutoff=250)
+semivariograma <- variogram(get(enestacolumnaestaelrinde)~1, datos, cutoff=250)
 
 
 sill<-max(semivariograma$gamma)
@@ -76,7 +76,7 @@ data2<-remove.duplicates(datos)
 crs(data2)<-NA
 crs(gri)<-NA
 
-Kg_wls <- krige(Rinde~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=40)
+Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=40)
 
 print("Armamos el Raster para ver en QGIS")
 raster<- raster(Kg_wls,layer=1)
