@@ -33,14 +33,17 @@ print(CRS(proj4string(poligono)))
 >print("ARMO VARIOGRAMA")
 require(gstat)
 
-semivariograma <- variogram(get(Rinde)~1, datos, cutoff=250)
+semivariograma <- variogram(Rinde~1, datos, cutoff=250)
 
 
 sill<-max(semivariograma$gamma)
 nugget<-semivariograma[1,3]
 distancia<-max(semivariograma$dist)
 
-error1 = 9999
+modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",distancia,nugget))
+error1<-(attr(modelovgm , 'SSErr'))
+
+
 modelo_final = "aaa"
 seleccion_modelo<-function(){
 	modelos<-c("Sph","Exp","Lin","Gau","Ste","Mat")
