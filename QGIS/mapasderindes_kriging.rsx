@@ -76,7 +76,7 @@ data2<-remove.duplicates(datos)
 crs(data2)<-NA
 crs(gri)<-NA
 
-Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=40)
+Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=Distancia)
 
 print("Armamos el Raster para ver en QGIS")
 raster<- raster(Kg_wls,layer=1)
