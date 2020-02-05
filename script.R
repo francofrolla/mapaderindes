@@ -167,6 +167,41 @@ modelo_semivariograma<-function(){
     print(attr(modelovgm , 'SSErr'))
 }
 
+auto_semivariograma<-function(){
+          datos<-datos2
+          print("ARMO VARIOGRAMA")
+          semivariograma <- variogram(Rinde~1, datos, cutoff=250)
+          sill<-max(semivariograma$gamma)
+          nugget<-semivariograma[1,3]
+          distancia<-max(semivariograma$dist)
+          modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",distancia,nugget))
+          error1<-attr(modelovgm , 'SSErr')
+          modelo_final = "Sph"
+
+          seleccion_modelo<-function(){
+                    modelos<-c("Sph","Exp","Lin","Gau","Ste","Mat")
+                              for (i in 1:length(modelos)){
+                          print(i)
+                              modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelos[i],distancia,nugget))
+                              error<-(attr(modelovgm , 'SSErr'))
+                                        print(modelos[i])
+                                        print(error)
+                                        if(error < error1){
+                                  modelo_final <<- modelos[i]
+                                      error1<-error
+                                        print(paste("Por ahora el mejor modelo es",modelo_final))	
+
+                                  }
+                          }
+                    }
+
+          suppressWarnings(seleccion_modelo())
+          print(paste("Modelo final",modelo_final))
+          modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,distancia,nugget))
+          plot(semivariograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza")
+
+}
+
 mapa_kriging<-function(distancia){
     data2<<-remove.duplicates(datos2)
     print("Datos originales")
