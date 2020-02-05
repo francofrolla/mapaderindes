@@ -105,7 +105,7 @@ outlier<-function(remplazo){
           myshp.outlier.1<-is.na(myshp.outlier@data[,"Rinde"])
           numeroNan<-sum(myshp.outlier.1[myshp.outlier.1==TRUE])
           n<-0
-          if(length(numeroNan) > 0){
+          if(numeroNan > 0){
           print("Filtrando datos")
           myshp.outlier <- subset(sp.na.omit(myshp.outlier[,"Rinde"]))
           n<<-length(myshp@data[,"Rinde"])-length(myshp.outlier@data[,"Rinde"])
