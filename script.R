@@ -97,17 +97,18 @@ outlier<-function(remplazo){
         print(paste("LS",LS))
 
         myshp.outlier<<-myshp
+        
 
         if (remplazo== "si") {
           # reemplazo de NA por datos fuera de rango
-          myshp.outlier[LS<myshp@data[,Rinde]|myshp@data[,Rinde]<LI] <-NA
-          myshp.outlier.1<-is.na(myshp.outlier@data[,Rinde])
+          myshp.outlier[LS<myshp@data[,"Rinde"]|myshp@data[,"Rinde"]<LI] <-NA
+          myshp.outlier.1<-is.na(myshp.outlier@data[,"Rinde"])
           numeroNan<-sum(myshp.outlier.1[myshp.outlier.1==TRUE])
           n<-0
           if(length(numeroNan) > 0){
           print("Filtrando datos")
-          myshp.outlier <- subset(sp.na.omit(myshp.outlier[,Rinde]))
-          n<<-length(myshp@data[,Rinde])-length(myshp.outlier@data[,Rinde])
+          myshp.outlier <- subset(sp.na.omit(myshp.outlier[,"Rinde"]))
+          n<<-length(myshp@data[,"Rinde"])-length(myshp.outlier@data[,"Rinde"])
           }
 
           print(paste("Se filtraron",n,"puntos"))
