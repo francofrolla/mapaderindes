@@ -108,10 +108,11 @@ outlier<-function(remplazo){
           if(numeroNan > 0){
           print("Filtrando datos")
           myshp.outlier <- subset(sp.na.omit(myshp.outlier[,"Rinde"]))
-          n<<-length(myshp@data[,"Rinde"])-length(myshp.outlier@data[,"Rinde"])
+          n<-length(myshp@data[,"Rinde"])-length(myshp.outlier@data[,"Rinde"])
+          print(paste("Se filtraron",n,"puntos"))
           }
 
-          print(paste("Se filtraron",n,"puntos"))
+          
           #eliminacion de todos los NA
 
 
