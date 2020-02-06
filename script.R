@@ -238,7 +238,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
 
           if (version_simplificada == "no"){
                 cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-                cortes<-quantile(valores, probs = c(0.10,0.20,0.40,0.50,0.60,0.80,1))
+                cortes<-quantile(valores, probs = c(0.10,0.20,0.40,0.50,0.60,0.80,0.9))
                 #reclasifico los valores continuos de raster por la calsificación de tomas.
                 values_tg<-unname(cortes)
 
