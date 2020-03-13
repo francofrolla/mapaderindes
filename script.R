@@ -33,16 +33,17 @@ listar_archivos<-function(){
           print(lista1)
 }
 
-ingresar_datos<-function(indicador_archivos){
+ingresar_datos<-function(indicador_archivos,variable){
         ruta_datos<-paste(getwd(),"/",lista1$lista[indicador_archivos],sep="")  
-        myshp <- readOGR(ruta_datos)
+        myshp <- readOGR(ruta_datos,stringsAsFactors=FALSE)
+        myshp@data[variable]<-as.numeric(unlist(c(myshp@data[variable])))
         proj4string(myshp) <- CRS("+init=epsg:4326")
         #reproyecto a metros pseudo mercator
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
         #me quedo con la columna de Rinde.
-        drops<-c("Rinde")
+        drops<-c(variable)
         myshp <<- myshp[,(names(myshp) %in% drops)]
-        print(spplot(myshp["Rinde"]))
+        print(spplot(myshp[variable]))
 }
 
 importar_poligono<-function(indicador_archivos){
