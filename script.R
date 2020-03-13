@@ -42,17 +42,12 @@ ingresar_datos<-function(indicador_archivos,variable){
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
         #me quedo con la columna de Rinde.
         drops<-c(variable)
-        myshp <<- myshp[,(names(myshp) %in% drops)]
-        print(spplot(myshp[variable]))
-        
-        listanombres<-colnames(myshp@data)
-        for (a in 1:length(listanombres)){
-           if (listanombres[a] == variable) {
-           listanombres[a]<- "Rinde"
-           }
-         }
-       colnames(myshp@data)<-listanombres
-         
+        myshp1 <- myshp[,(names(myshp) %in% drops)]
+               
+       colnames(myshp1@data)<-"Rinde"
+       #print(spplot(myshp["Rinde"]))
+       myshp<<-myshp1
+
 }
 
 importar_poligono<-function(indicador_archivos){
