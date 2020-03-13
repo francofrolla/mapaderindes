@@ -44,6 +44,15 @@ ingresar_datos<-function(indicador_archivos,variable){
         drops<-c(variable)
         myshp <<- myshp[,(names(myshp) %in% drops)]
         print(spplot(myshp[variable]))
+        
+        listanombres<-colnames(myshp@data)
+        for (a in 1:length(listanombres)){
+           if (listanombres[a] == variable) {
+           listanombres[a]<- "Rinde"
+           }
+         }
+       colnames(myshp@data)<-listanombres
+         
 }
 
 importar_poligono<-function(indicador_archivos){
