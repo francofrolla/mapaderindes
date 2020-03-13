@@ -134,9 +134,9 @@ outlier<-function(remplazo){
        }
 }
 
-inliers<-function(){
+inliers<-function(distanciamax){
   cord <- filtro1@coords
-  gri <- dnearneigh(cord,0,30)
+  gri <- dnearneigh(cord,0,distanciamax)
   lw <- nb2listw(gri, style = "W",zero.policy=TRUE)
   par(mfrow=c(1,1))
  
