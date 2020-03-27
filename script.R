@@ -46,7 +46,7 @@ ingresar_datos<-function(indicador_archivos,variable){
                
        colnames(myshp1@data)<-"Rinde"
        #print(spplot(myshp["Rinde"]))
-       myshp<<-myshp1
+       datos2<<-myshp1
 
 }
 
@@ -87,6 +87,7 @@ outlier<-function(remplazo){
               }
             }   
         #visualizacion de outliers 
+        myshp<-datos2
         par(mfrow=c(1,2))
         hist(myshp@data$Rinde,col='grey',nclass=20,main="Histograma",ylab='Frecuencia Relativa',xlab='Rendimiento')
         boxplot(myshp@data$Rinde,col='grey',ylab='Rendimiento',main="Box-Plot",ylim = c(min(myshp@data$Rinde), max(myshp@data$Rinde)))
@@ -125,11 +126,12 @@ outlier<-function(remplazo){
           hist(myshp.outlier@data$Rinde,col='grey',nclass=20,main="Histograma",ylab='Frecuencia Relativa',xlab='Rendimiento')
           boxplot(myshp.outlier@data$Rinde,col='grey',ylab='Rendimiento',main="Box-Plot",ylim = c(min(myshp.outlier@data$Rinde), max(myshp.outlier@data$Rinde)))
           par(mfrow=c(1,1))
-          filtro1<<-myshp.outlier  
+          datos2<<-myshp.outlier  
        }
 }
 
 inliers<-function(distanciamax){
+  filtro1<-datos2
   cord <- filtro1@coords
   gri <- dnearneigh(cord,0,distanciamax)
   lw <- nb2listw(gri, style = "W",zero.policy=TRUE)
