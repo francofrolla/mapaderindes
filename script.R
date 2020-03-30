@@ -158,7 +158,7 @@ inliers<-function(distanciamax){
 }
 
 mapa_idw <-function(){
-    prof.idw <- idw(Rinde~1, datos2, gri,nmax=5)
+    prof.idw <<- idw(Rinde~1, datos2, gri,nmax=5)
     print(spplot(prof.idw["var1.pred"], main = ""))
 }
 
