@@ -89,6 +89,8 @@ if (version_simplificada == "no"){
           rc <- reclassify(r, lamatrix,include.lowest=TRUE)
           print("ACA ESTA LA VECTORIZACION")
           vectorizado<-rasterToPolygons(rc,na.rm=TRUE,dissolve=TRUE)
+	  #Este error me lo marco el Juani Orcellet.
+	  colnames(vectorizado@data)<-c("output")
 
 
           vectorizado@data$colores<-as.factor(unname(cortes))
