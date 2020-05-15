@@ -42,6 +42,7 @@ distancia<-max(semivariograma$dist)
 
 modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",distancia,nugget))
 error1<-attr(modelovgm , 'SSErr')
+>print(paste("Error inicial",error1))
 modelo_final = "Sph"
 
 
