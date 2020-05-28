@@ -46,7 +46,7 @@ ingresar_datos<-function(indicador_archivos,variable){
         myshp1 <- myshp[,(names(myshp) %in% drops)]
                
        colnames(myshp1@data)<-"Rinde"
-       print(spplot(myshp["Rinde"]))
+       print(spplot(myshp1["Rinde"]))
        datos2<<-myshp1
 
 }
