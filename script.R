@@ -37,7 +37,7 @@ ingresar_datos<-function(indicador_archivos,variable){
         ruta_datos<-paste(getwd(),"/",lista1$lista[indicador_archivos],sep="") 
         myshp <- readOGR(ruta_datos,use_iconv=TRUE, encoding = "UTF-8")  
         #myshp <- readOGR(ruta_datos,stringsAsFactors=FALSE)
-        myshp@data[variable]<-as.numeric(unlist(c(myshp@data[variable])))
+        myshp@data[variable]<-as.numeric(as.character(unlist(c(myshp@data[variable]))))
         proj4string(myshp) <- CRS("+init=epsg:4326")
         #reproyecto a metros pseudo mercator
         myshp <- spTransform(myshp, CRS("+init=epsg:3857"))
