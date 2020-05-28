@@ -250,6 +250,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada,ca
                 
                 cortes<-quantile(valores, probs = c(0.10,0.20,0.40,0.50,0.60,0.80,0.9))
                 if(cada20cm == "si"){cortes<-c(20,40,60,80,100,120,140)}
+                print(cortes)
                 #reclasifico los valores continuos de raster por la calsificación de tomas.
                 values_tg<-unname(cortes)
 
