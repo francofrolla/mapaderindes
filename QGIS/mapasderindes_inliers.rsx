@@ -72,7 +72,7 @@ lw <- nb2listw(gri, style = "W",zero.policy=TRUE)
 par(mfrow=c(1,1))
  
 ML <- localmoran (filtro1@data[,Rinde], lw, p.adjust.method="bonferroni",alternative ="less",zero.policy=TRUE)
-MP <- moran.plot(filtro1@data[,Rinde],lw,quiet=T,labels=F,col=3,zero.policy=T,xlab="Rendimiento", ylab="Rendimiento Spatially Lagged")
+MP <- moran.plot2(filtro1@data[,Rinde],lw,quiet=T,labels=F,col=3,zero.policy=T,xlab="Rendimiento", ylab="Rendimiento Spatially Lagged")
 Influ <- MP$is.inf 
 datos0 <- data.frame(filtro1@data,filtro1@coords,ML,Influ)
  
