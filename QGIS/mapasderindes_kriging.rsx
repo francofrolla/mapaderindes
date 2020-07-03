@@ -21,6 +21,7 @@ proj4string(datos) <- CRS(proj4string(datos))
 
 
 >print("ARMO GRILLA DE MUESTREO")
+poligono <- buffer(poligono, width=100) 
 grdpts <- makegrid(poligono, cellsize = 5)
 spgrd <- SpatialPoints(grdpts, proj4string = CRS(proj4string(poligono)))
 spgrdWithin <- SpatialPixels(spgrd[poligono,])
