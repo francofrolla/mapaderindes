@@ -22,6 +22,7 @@ library(spdep)
 library(gstat)
 library(raster)
 library(rgdal)
+library(rgeos)
 
 print(Carpeta)
 setwd(Carpeta)
@@ -95,6 +96,13 @@ if (version_simplificada == "no"){
 
           vectorizado@data$colores<-as.factor(unname(cortes))
           plot(vectorizado["output"],col=cols,border="NA")
+
+	  gIsValid(vectorizado, reason = T)
+          vectorizado <- gBuffer(vectorizado, width=0, byid = T)
+          print("generando buffer para solucionar problemas de geometria")
+          gIsValid(vectorizado, reason = T)
+
+
           writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
           print("ACA ARMO EL PDF")   
           valores<-na.omit(Kg_wls@data[,1])
