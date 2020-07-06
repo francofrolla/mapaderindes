@@ -95,6 +95,8 @@ if (version_simplificada == "no"){
 
 
           vectorizado@data$colores<-as.factor(unname(cortes))
+          #Reordeno los valores para hacer coincidir la escala de colores con la del dataframe. Error marcado por Wilson y Zilio
+          vectorizado<-vectorizado[order(vectorizado$output),]
           plot(vectorizado["output"],col=cols,border="NA")
 
 	  gIsValid(vectorizado, reason = T)
