@@ -1,7 +1,7 @@
 ##Shape=vector point
 ##enestacolumnaestaelrinde=field Shape
 ##Poligono=vector polygon
-##Distancia = number 40
+##Limite_distancia=number 40
 ##showplots
 ##output=output raster
 
@@ -39,9 +39,9 @@ semivariograma <- variogram(get(enestacolumnaestaelrinde)~1, datos, cutoff=250)
 
 sill<-max(semivariograma$gamma)
 nugget<-semivariograma[1,3]
-distancia<-max(semivariograma$dist)
+Limite_distancia<-max(semivariograma$dist)
 
-modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",distancia,nugget))
+modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,"Sph",Limite_distancia,nugget))
 error1<-attr(modelovgm , 'SSErr')
 >print(paste("Error inicial",error1))
 modelo_final = "Sph"
@@ -51,7 +51,7 @@ seleccion_modelo<-function(){
 	modelos<-c("Sph","Exp","Lin","Gau","Ste","Mat")
 		for (i in 1:length(modelos)){
                 print(i)
-		modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelos[i],distancia,nugget))
+		modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelos[i],Limite_distancia,nugget))
 	 	error<-(attr(modelovgm , 'SSErr'))
 			print(modelos[i])
 			print(error)
@@ -66,7 +66,7 @@ seleccion_modelo<-function(){
 
 suppressWarnings(seleccion_modelo())
 >print(paste("Modelo final",modelo_final))
-modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,distancia,nugget))
+modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelo_final,Limite_distancia,nugget))
 plot(semivariograma,modelovgm ,main="",xlab="Distancia",ylab="Semivarianza")
 
 data2<-remove.duplicates(datos)
@@ -78,7 +78,7 @@ data2<-remove.duplicates(datos)
 crs(data2)<-NA
 crs(gri)<-NA
 
-Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=Distancia)
+Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=Limite_distancia)
 
 print("Armamos el Raster para ver en QGIS")
 raster<- raster(Kg_wls,layer=1)
