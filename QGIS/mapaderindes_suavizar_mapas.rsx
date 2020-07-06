@@ -2,10 +2,11 @@
 ##Suavizado=output raster
 ##output_plots_to_html
 ##showplots
-##type=selection 3x3;6x6;9x9;13x13
-##type1=selection media;mediana;maximo;minimo;moda
+##Ventana=selection 3x3;6x6;9x9;13x13
+##Metodo=selection media;mediana;maximo;minimo;moda
 
-
+type<-Ventana
+type1<-Metodo
 
 
 library(raster)
