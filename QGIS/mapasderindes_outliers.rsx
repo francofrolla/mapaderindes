@@ -1,8 +1,9 @@
 ##Shape=vector
 ##Rinde=field Shape
 ##output_plots_to_html
-##Minimo =number 0
-##Maximo =number 99999 
+##Limite_minimo =number 0
+##Limite_maximo =number 99999 
+##Metodo=selection Media+ 3 DS;Media+ 2 DS;Quantil 90-10;Quantil 80-20; Usuario
 ##showplots
 ##outliers=output vector
 
@@ -35,20 +36,26 @@ myshp <- as_Spatial(Shape)
 >str(myshp)
 
 
-
-
-
+datos<-na.omit(myshp@data[,Rinde])
 Media <- mean(na.omit(myshp@data[,Rinde]))
 DE <- sd(na.omit(myshp@data[,Rinde]))
-LI <- Media-(2*DE)
-LS <- Media+(2*DE)
+#LI <- Media-(2*DE)
+#LS <- Media+(2*DE)
+
+
+if(Metodo==0){LI <- Media-(3*DE); LS <- Media+(3*DE)}
+if(Metodo==1){LI <- Media-(2*DE); LS <- Media+(2*DE)}
+if(Metodo==2){LI <- quantile(datos,0.1); LS <- quantile(datos,0.9)}
+if(Metodo==3){LI <- quantile(datos,0.2); LS <- quantile(datos,0.8)}
+if(Metodo==4){LI <- Limite_minimo; LS <- Limite_maximo}
+
+#if (LS > Maximo){LS = Maximo}
+#if (LI > Minimo){LI = Minimo}
+
 >print(paste("Media:",Media))
 >print(paste("DE:",DE))
 >print(paste("LI",LI))
 >print(paste("LS",LS))
-
-if (LS > Maximo){LS = Maximo}
-if (LI > Minimo){LI = Minimo}
 
 
 myshp.outlier<-myshp
