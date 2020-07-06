@@ -1,10 +1,10 @@
-##Raster= raster
+##Raster=raster
 ##Output=output vector
-##Carpeta= folder
-##Nombre = string Lote prueba 1
-##Unidad_de_Cosecha = string kg/ha
-##Comentarios= string Establecimiento "El calabozo", cosecha: 13/01/2020
-##Version_simplificada= string no
+##Carpeta=folder
+##Nombre=string Lote prueba 1
+##Unidad_de_Cosecha=string kg/ha
+##Comentarios=string Establecimiento "El calabozo", cosecha: 13/01/2020
+##Version_simplificada=string no
 
 ##output_plots_to_html
 ##showplots
