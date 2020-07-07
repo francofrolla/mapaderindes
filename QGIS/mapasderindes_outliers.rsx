@@ -1,8 +1,8 @@
 ##Shape=vector
 ##Rinde=field Shape
 ##output_plots_to_html
-##Limite_minimo =number 0
-##Limite_maximo =number 99999 
+##Limite_minimo=number 0
+##Limite_maximo=number 99999 
 ##Metodo=selection Media+ 3 DS;Media+ 2 DS;Quantil 90-10;Quantil 80-20; Usuario
 ##showplots
 ##outliers=output vector
