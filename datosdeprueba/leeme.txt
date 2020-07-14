@@ -1,0 +1,1 @@
+Un conjunto de datos de prueba para los algoritmos. Los mismos ya se encuntran reporyectados al sistema de referencia en coordendas EPSG:3857. 
