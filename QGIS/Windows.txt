@@ -1,0 +1,6 @@
+En Windows tenemos varios problemas. Cosas a probar
+Instalar la version estable del plugin R proccesing provider 2.0
+
+https://plugins.qgis.org/plugins/processing_r/
+
+Instalar manualmente desde Qgis. 
