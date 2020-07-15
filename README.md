@@ -7,7 +7,7 @@ https://colab.research.google.com/drive/1ffs1YmgtqWQkEfvTiF82sVS1fSU6PfQg
 # mapaderindes/QGIS
 Mismas funciones pero ajustadas para su uso en QGIS mediante el complemento "Processing R Provider" (https://plugins.qgis.org/plugins/processing_r/). El calculo del modelo del semivariograma fue automatizado para facilitar el uso del programa. Se ajusta un modelo por la siguiente función.
 
-#mapaderindes/QGIS en WINDOWS.
+# mapaderindes/QGIS en WINDOWS.
 probado bajo Qgis 3.10, R 4.02 y Proccesing R provider 2.0 (el 2.2 marca error).
 Proccesing R provider 2.0 se encuentra en este repositorio para descarga directa.
 
