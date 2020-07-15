@@ -1,6 +1,21 @@
 En Windows tenemos varios problemas. Cosas a probar
 Instalar la version estable del plugin R proccesing provider 2.0
 
-https://plugins.qgis.org/plugins/processing_r/
+1-Instalando Qgis 3.10 y R 4.02. Ingresando a Qgis dando doble clic sobre el icono (no Administrador)
+a-Probando script de prueba Caja de Herramientas> R > test_sf > 
+a.1-Observado, Windows crea una ruta temporal para instalar los paquetes. En la configuración del complemento por defecto viene tildada la opción
+"Usar libreria personal sobre libreria del sistema"
+'C:/Users/franc/AppData/Roaming/QGIS/QGIS3/profiles/default/processing/rlibs'
+a.2-Se instalan mas paquetes de los necesarios. 
+a.3-El algoritmo termino correctamente con la tarea.
+
+2-Probando con algoritmo instalar.rsx
+
+ERROR: Error: '\U' used without hex digits in character string starting ""C:\U"
+2a-Probando iniciar Qgis como Administrador. MISMO ERROR
+2b-Cambiando version de Processing R Provider de 2.2.0 a 2.0
+
+EXITO! Outliers corrio correctamente... 
+Link de descarga: https://plugins.qgis.org/plugins/processing_r/version/2.0.0/
 
 Instalar manualmente desde Qgis. 
