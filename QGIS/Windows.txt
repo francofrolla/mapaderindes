@@ -19,4 +19,5 @@ ERROR: Error: '\U' used without hex digits in character string starting ""C:\U"
 EXITO! Outliers corrio correctamente... 
 Link de descarga: https://plugins.qgis.org/plugins/processing_r/version/2.0.0/
 
-3-Probando algorimo inliers. 
+3-Probando algorimo inliers. 756.56 seg I3/8 gb ram
+ECHO
