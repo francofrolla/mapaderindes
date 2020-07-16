@@ -1,7 +1,7 @@
 ##Shape=vector point
 ##enestacolumnaestaelrinde=field Shape
 ##Poligono=vector polygon
-##Limite_distancia=number 40
+##Distancia_busqueda=number 40
 ##showplots
 ##output=output raster
 
@@ -75,10 +75,11 @@ data2<-remove.duplicates(datos)
 >print("Datos filtrados")
 >print(nrow(data2))
 
-crs(data2)<-NA
-crs(gri)<-NA
+#Sileciado 16/07
+#crs(data2)<-NA
+#crs(gri)<-NA
 
-Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=Limite_distancia)
+Kg_wls <- krige(get(enestacolumnaestaelrinde)~1, data2, gri, model = modelovgm, debug.level=-1,maxdist=Distancia_busqueda)
 
 print("Armamos el Raster para ver en QGIS")
 raster<- raster(Kg_wls,layer=1)
