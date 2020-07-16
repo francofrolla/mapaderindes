@@ -21,3 +21,11 @@ Link de descarga: https://plugins.qgis.org/plugins/processing_r/version/2.0.0/
 
 3-Probando algorimo inliers. 756.56 seg I3/8 gb ram
 ECHO
+
+4-Kriging, ERROR. Tardaba tirando a eterno. Problema, la distancia de busqueda del algoritmo se mezclaba con la distancia del semivariograma.
+SOLUCIONADO
+
+5-Suavizado. OK no dio problemas
+6-Exportado. OK no dio problemas
+
+FIN
