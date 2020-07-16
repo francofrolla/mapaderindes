@@ -16,7 +16,10 @@ para instalarlo desde QGIS> plugins> instalar desde ZIP > processing_r-2.0.0.zip
 # mapaderindes/datosdeprueba
 Conjunto de datos de prueba probados en:
 
-Qgis 3.4, Ubuntu 18.04, R 4.02, R proccesing 2.0 
+Qgis 3.4, Ubuntu 18.04,R 4.02, R proccesing 2.0 
+
+Qgis 3.10, Windows 10, R 4.02, R proccesing 2.0 
+
 
 
 
