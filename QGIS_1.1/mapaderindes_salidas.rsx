@@ -1,4 +1,5 @@
 ##Raster=raster
+##Poligono=vector polygon
 ##Output=output vector
 ##Carpeta=folder
 ##Nombre=string Lote prueba 1
@@ -14,7 +15,7 @@ nombre<-Nombre
 detalleslote <-Comentarios
 unidad_de_cosecha<-Unidad_de_Cosecha
 version_simplificada<-Version_simplificada
-
+poligono <- as_Spatial(Poligono)
 
 
 library(sp)
@@ -23,6 +24,11 @@ library(gstat)
 library(raster)
 library(rgdal)
 library(rgeos)
+library(ggplot2)
+library(grid)
+library(ggplotify)
+library(gridExtra)
+library(ggplot2)
 
 print(Carpeta)
 setwd(Carpeta)
@@ -30,9 +36,7 @@ Kg_wls<-as(Raster, "SpatialPixelsDataFrame")
 valores<-na.omit(Kg_wls@data[,1])
 print(str(Kg_wls))
 print(paste("Los archvos seran guardados en:", getwd()))
-r<-Raster
-
-     
+   
 
 
 if (version_simplificada == "no"){
@@ -85,8 +89,9 @@ if (version_simplificada == "no"){
               }
 
           }
-
-
+	  #Recorto al area del lote....	
+	  r <- mask(Raster, poligono)
+	
           rc <- reclassify(r, lamatrix,include.lowest=TRUE)
           print("ACA ESTA LA VECTORIZACION")
           vectorizado<-rasterToPolygons(rc,na.rm=TRUE,dissolve=TRUE)
@@ -104,34 +109,79 @@ if (version_simplificada == "no"){
           print("generando buffer para solucionar problemas de geometria")
           gIsValid(vectorizado, reason = T)
 
+	  #Calculo del area del lote por rendimiento
+	  vectorizado <- spTransform(vectorizado,CRS("+init=epsg:4326"))
+	  #calculo de area para cada zona para pasar al informe. 
+	  raster::area(vectorizado,na.rm=TRUE)/10000
+	  areas_lote<-raster::area(vectorizado)
+	  datos_pdf<-data.frame(round(vectorizado@data$output,2),round(areas_lote/10000,2))
+	  arealote<-sum(round(areas_lote/10000,2))
+	  valores[valores == 0] <- NA
+	  valores<-na.omit(valores)
+	  media_lote<-round(mean(valores),2)
+	  colnames(datos_pdf)<-c("Rendimiento","Area (ha)")
+	  total<-data.frame(media_lote,arealote)
+	  colnames(total)<-c("Rendimiento","Area (ha)")
+	  datos_pdf <- rbind(datos_pdf, total)	
+
 
           writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
           print("ACA ARMO EL PDF")   
-          valores<-na.omit(Kg_wls@data[,1])
-          #cortes<-quantile(valores, probs = c(0,0.10,0.25,0.50,0.75,0.90,1))
-          h <- hist(valores, breaks=20, plot=F) # h$breaks and h$mids
-          #cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-          k <- cols[findInterval(h$breaks, unname(cortes), rightmost.closed=T, all.inside=F) + 1]
-          #plot(h, col=k,main=paste("Distribucion de rendimiento, Lote:", Lote),xlab= paste("Rendimiento",unidad_de_cosecha),ylab="Frecuencia")
+    		hacerpdf<-function(nombre){
+			    pdf(file= paste(ruta,"/",nombre,".pdf",sep=""))
+			    # make labels and margins smaller
+			    par(cex=0.7, mai=c(0.1,0.1,0.1,0.1))
+			    # define area for the histogram
+			    par(fig=c(0.1,0.7,0.1,0.9))
+			    plot(vectorizado["output"], col=cols,main=paste("Mapa de Rendimiento",nombre,sep=" "))
+			    mtext(detalleslote,side=1,cex=1)
+			    # define area for the legend
+			    par(fig=c(0.71,1,0.5,0.9), new=TRUE)
+			    plot(1,1,bty="n",axes = FALSE,col="White")
+			    legend(0.6,1.4, inset=.02, title="Rendimiento",
+				   as.character(datos_pdf[,1]), fill=c(cols,"#FFFF00"), horiz=FALSE, cex=1.5,box.lty = 0)
+			    par(fig=c(0.1,0.95,0.1,0.9), new=TRUE)
+			    mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
+
+			    #########ACA SE ARMA LA PAGINA 2 DEL PDF
 
 
-          ruta<-getwd()
-          nombre1<-paste("Mapa de rendimiento-",nombre,".pdf",sep= "")
-          pdf(file= paste(ruta,"/",nombre1,sep=""))
-          #par(mar = c(2,2,2,2)
-           par(mfrow=c(1,1))
+			    df<-data.frame(valores)
+			    valores[valores == 0] <- NA
+			    valores<-na.omit(valores)
+			    df<-data.frame(valores)
+			    h <- hist(valores, breaks=20, plot=F) # h$breaks and h$mids
+			    #cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
+			    k <- cols[findInterval(h$breaks, unname(cortes), rightmost.closed=T, all.inside=F) + 1]
+			    grafico<-ggplot(df, aes(x=valores)) + geom_histogram(breaks=h$breaks,color=k[1:13],fill=k[1:13])+
+			      ggtitle("Histograma rendimiento") + xlab("Rendimientos") + ylab("Frecuencia")
+			    #########aca se arma la tabla
+
+			    tt3 <- ttheme_minimal(
+			      core=list(bg_params = list(fill = c(cols,"#FFFF00"), col=NA),fg_params=list(fontface=3)),
+			      colhead=list(fg_params=list(col="black", fontface=4L)),
+			      rowhead=list(fg_params=list(col="black", fontface=3L)))
+
+			    title <- textGrob(paste("Has por rendimientos medios","\n","según zona"),gp=gpar(fontsize=14),just = "center")
+			    title1 <- textGrob(paste("Frecuencia de rendimientos aproximada","\n","a las zonas"),gp=gpar(fontsize=14))
 
 
-          plot(vectorizado["output"], col=cols, border="NA",main=paste("Mapa de Rendimiento",nombre,sep=" "))
-          max<-length(cortes)
-          legend("topleft",as.character(round(unname(cortes[1:max]),digits=2)),fill=cols,cex = 0.8,bty="n",title=unidad_de_cosecha)
-          mtext(detalleslote,side=1,cex=1)
-          mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
+			    grid.arrange(
+			      title,
+			      title1,
+			      tableGrob(datos_pdf, theme=tt3,rows = NULL),
+			      grafico,
+			      widths = c(1, 1),
+			      heights = c(0.2,1),
+			      layout_matrix = rbind(c(1, 2),c(3, 4)))
 
-          plot(h, col=k,main=paste("Histograma rendimiento"),xlab=paste("Rendimiento", unidad_de_cosecha),ylab="Frecuencia")
-          mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
+			    dev.off()
+			}
 
-          dev.off()
+	  hacerpdf(nombre)
+
+
+
           print("ACA ARMO EL KML")   
           hacerkml<-function(){
 
