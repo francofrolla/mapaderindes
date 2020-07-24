@@ -62,6 +62,12 @@ myshp.outlier<-myshp
 myshp.outlier[LS<myshp@data[Rinde]|myshp@data[Rinde]<LI] <-NA
 myshp.outlier <- subset(sp.na.omit(myshp.outlier[Rinde]))
 
+>print("Datos a eliminar:")
+>print(sum(is.na(myshp.outlier@data[Rinde])))
+
+if(sum(is.na(myshp.outlier@data[Rinde])) == 0){stop("No hay datos para eliminar con los filtros propuestos")} 
+
+
 n<-nrow(myshp@data[Rinde])-nrow(myshp.outlier@data[Rinde])
 >print(paste("Se filtraron",n,"puntos"))
 
