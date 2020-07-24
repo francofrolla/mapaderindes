@@ -127,6 +127,24 @@ if (version_simplificada == "no"){
 
          writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
          print("ACA ARMO EL PDF")
+
+         factores<-c("")
+	 for (i in 1:nrow(datos_pdf)){
+		  rinde<-round(datos_pdf[i,1],2)
+		  area<-round(datos_pdf[i,2],2)
+		  valor<-paste(as.character(rinde)," ","(",as.character(area)," ha)",sep="")
+		  factores<-c(factores,valor)
+		  }
+
+	 vectorizado1<-st_as_sf(vectorizado)
+		if (version_simplificada == "no"){
+		  rindemedio<-factores[9]
+		  factores<-factores[2:8]
+		}
+		if (version_simplificada == "si"){
+		  rindemedio<-factores[6]
+		  factores<-factores[2:5]
+		}
 	 
 	 mapa<-ggplot(data = vectorizado1["output"]) +
   	 xlab("Longitud") + ylab("Latitud") +
@@ -152,7 +170,6 @@ if (version_simplificada == "no"){
 
           print("ACA ARMO EL KML")   
           hacerkml<-function(){
-
             obj <- spTransform(vectorizado, CRS("+init=epsg:4326"))
             inners<-c("")
             outers<-c("")
