@@ -24,11 +24,11 @@ library(gstat)
 library(raster)
 library(rgdal)
 library(rgeos)
-library(ggplot2)
 library(grid)
 library(ggplotify)
 library(gridExtra)
 library(ggplot2)
+library(ggspatial)
 
 print(Carpeta)
 setwd(Carpeta)
@@ -125,61 +125,29 @@ if (version_simplificada == "no"){
 	  datos_pdf <- rbind(datos_pdf, total)	
 
 
-          writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
-          print("ACA ARMO EL PDF")   
-    		hacerpdf<-function(nombre){
-			    pdf(file= paste(ruta,"/",nombre,".pdf",sep=""))
-			    # make labels and margins smaller
-			    par(cex=0.7, mai=c(0.1,0.1,0.1,0.1))
-			    # define area for the histogram
-			    par(fig=c(0.1,0.7,0.1,0.9))
-			    plot(vectorizado["output"], col=cols,main=paste("Mapa de Rendimiento",nombre,sep=" "))
-			    mtext(detalleslote,side=1,cex=1)
-			    # define area for the legend
-			    par(fig=c(0.71,1,0.5,0.9), new=TRUE)
-			    plot(1,1,bty="n",axes = FALSE,col="White")
-			    legend(0.6,1.4, inset=.02, title="Rendimiento",
-				   as.character(datos_pdf[,1]), fill=c(cols,"#FFFF00"), horiz=FALSE, cex=1.5,box.lty = 0)
-			    par(fig=c(0.1,0.95,0.1,0.9), new=TRUE)
-			    mtext("Desarrollodo en INTA Bordenave - @FrancoFrolla",side=4,cex=0.5)
-
-			    #########ACA SE ARMA LA PAGINA 2 DEL PDF
-
-
-			    df<-data.frame(valores)
-			    valores[valores == 0] <- NA
-			    valores<-na.omit(valores)
-			    df<-data.frame(valores)
-			    h <- hist(valores, breaks=20, plot=F) # h$breaks and h$mids
-			    #cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-			    k <- cols[findInterval(h$breaks, unname(cortes), rightmost.closed=T, all.inside=F) + 1]
-			    grafico<-ggplot(df, aes(x=valores)) + geom_histogram(breaks=h$breaks,color=k[1:13],fill=k[1:13])+
-			      ggtitle("Histograma rendimiento") + xlab("Rendimientos") + ylab("Frecuencia")
-			    #########aca se arma la tabla
-
-			    tt3 <- ttheme_minimal(
-			      core=list(bg_params = list(fill = c(cols,"#FFFF00"), col=NA),fg_params=list(fontface=3)),
-			      colhead=list(fg_params=list(col="black", fontface=4L)),
-			      rowhead=list(fg_params=list(col="black", fontface=3L)))
-
-			    title <- textGrob(paste("Has por rendimientos medios","\n","según zona"),gp=gpar(fontsize=14),just = "center")
-			    title1 <- textGrob(paste("Frecuencia de rendimientos aproximada","\n","a las zonas"),gp=gpar(fontsize=14))
-
-
-			    grid.arrange(
-			      title,
-			      title1,
-			      tableGrob(datos_pdf, theme=tt3,rows = NULL),
-			      grafico,
-			      widths = c(1, 1),
-			      heights = c(0.2,1),
-			      layout_matrix = rbind(c(1, 2),c(3, 4)))
-
-			    dev.off()
-			}
-
-	  hacerpdf(nombre)
-
+         writeOGR(vectorizado, layer = paste(nombre," vectorizado",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
+         print("ACA ARMO EL PDF")
+	 
+	 mapa<-ggplot(data = vectorizado1["output"]) +
+  	 xlab("Longitud") + ylab("Latitud") +
+ 	 ggtitle(paste0("Mapa de rendimiento: ",nombre), subtitle = paste0(detalleslote,"\n","Rinde medio (",unidad_de_cosecha,"): ",rindemedio))+
+  	 geom_sf(color = "black", aes(fill = factor(factores)))+
+  	 scale_fill_manual(values = cols, name= "Rendimiento")+ 
+    	 theme(axis.text.x = element_text(size = 6),axis.text.y = element_text(size = 6),legend.position = "right", panel.grid.major = element_line(color = gray(.5), linetype = "dashed", size = 0.5), panel.background = element_rect(fill = "aliceblue"))
+         
+         title <- textGrob(paste("Realizado por https://github.com/francofrolla/mapaderindes/ - INTA Bordenave"),gp=gpar(fontsize=7),just = "center")
+  
+	 arreglo<-grid.arrange(
+    		mapa,
+    		title,
+    		nrow = 2,
+    		ncol=1,
+    		heights = c(1,0.1))
+         
+         ruta<-getwd()
+         nombre1<-paste("Mapa de rendimiento-",nombre,".pdf",sep= "")
+         ggsave(file=paste(ruta,"/",nombre1,sep=""), arreglo)  
+  
 
 
           print("ACA ARMO EL KML")   
