@@ -34,7 +34,8 @@ crs_imagen<-st_crs(Shape)
 myshp <- as_Spatial(Shape)
 >print("--------------------------------------------------------")
 >str(myshp)
-
+#la presencia de NULL da error, agregado 28/07
+myshp<-sp.na.omit(myshp[Rinde])
 
 datos<-na.omit(myshp@data[,Rinde])
 Media <- mean(na.omit(myshp@data[,Rinde]))
