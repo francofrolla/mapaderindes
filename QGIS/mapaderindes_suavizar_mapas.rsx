@@ -23,7 +23,7 @@ if(type1==0){suaveraster<-focal(Raster[[1]],w=ventana,fun=mean,na.rm=TRUE); prin
 if(type1==1){suaveraster<-focal(Raster[[1]],w=ventana,fun=median,na.rm=TRUE); print("Se aplico la mediana")}
 if(type1==2){suaveraster<-focal(Raster[[1]],w=ventana,fun=max,na.rm=TRUE); print("Se aplico la maxima")}
 if(type1==3){suaveraster<-focal(Raster[[1]],w=ventana,fun=min,na.rm=TRUE); print("Se aplico la minima")}
-if(type1==4){suaveraster<-focal(Raster[[1]],w=ventana,fun=mode,na.rm=TRUE); print("Se aplico la moda")}
+if(type1==4){suaveraster<-focal(Raster[[1]],w=ventana,fun=modal,na.rm=TRUE); print("Se aplico la moda")}
 
 
 
