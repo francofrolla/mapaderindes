@@ -2,7 +2,7 @@
 ##Suavizado=output raster
 ##output_plots_to_html
 ##showplots
-##Ventana=selection 3x3;6x6;9x9;13x13
+##Ventana=selection 3x3;5x5;9x9;13x13
 ##Metodo=selection media;mediana;maximo;minimo;moda
 
 type<-Ventana
@@ -12,7 +12,7 @@ type1<-Metodo
 library(raster)
 
 if(type==0){celda <- 3}
-if(type==1){celda <- 6}
+if(type==1){celda <- 5}
 if(type==2){celda <- 9}
 if(type==3){celda <- 13}
 
