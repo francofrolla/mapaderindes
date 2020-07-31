@@ -21,11 +21,10 @@ Qgis 3.10, Windows 10, R 4.02, R proccesing 2.0
 
 # Requisitos para hacer los mapas:
 
-1-Todos los datos ingresados en QGIS tienen que estar reproyectadas a coordenas planas. No funcionan con coordendas geograficas. /t
+1-Todos los datos ingresados en QGIS tienen que estar reproyectadas a coordenas planas. No funcionan con coordendas geograficas. <br />
 2-El shapefile del mapa de rendimiento tiene que ser de Geometria: *Point*, no se soporta *Multipoint*. En Qgis, sobre la capa de puntos, Propiedades, Información, Geometria.
-En caso de ser una capa *Multipoint*, usar la herramienta *Multiparte a monoparte* /t
-3-El nombre que identifica la columna de rendimiento no tiene que tener simbolos raros (%,%,/,!) o espacios. Usar palabras simples como Rendimiento, Masa_seca, rinde, etc. /t
+En caso de ser una capa *Multipoint*, usar la herramienta *Multiparte a monoparte* <br />
+3-El nombre que identifica la columna de rendimiento no tiene que tener simbolos raros (%,%,/,!) o espacios. Usar palabras simples como Rendimiento, Masa_seca, rinde, etc. <br />
 
 
-Tw @FrancoFrolla
-email: frolla.franco@inta.gob.ar
+# email: frolla.franco@inta.gob.ar
