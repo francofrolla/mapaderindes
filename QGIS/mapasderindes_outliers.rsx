@@ -35,7 +35,8 @@ myshp <- as_Spatial(Shape)
 >print("--------------------------------------------------------")
 >str(myshp)
 #la presencia de NULL da error, agregado 28/07
-myshp<-sp.na.omit(myshp[Rinde])
+#Esta linea dio conflictos con capas reproyectadas en 5346, se elimina
+#myshp<-sp.na.omit(myshp[Rinde])
 
 datos<-na.omit(myshp@data[,Rinde])
 Media <- mean(na.omit(myshp@data[,Rinde]))
