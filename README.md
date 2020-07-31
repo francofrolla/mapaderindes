@@ -17,35 +17,15 @@ para instalarlo desde QGIS> plugins> instalar desde ZIP > processing_r-2.0.0.zip
 Conjunto de datos de prueba probados en:
 
 Qgis 3.4, Ubuntu 18.04,R 4.02, R proccesing 2.0 
-
 Qgis 3.10, Windows 10, R 4.02, R proccesing 2.0 
 
+#Requisitos para hacer los mapas:
 
+1-Todos los datos ingresados en QGIS tienen que estar reproyectadas a coordenas planas. No funcionan con coordendas geograficas.
+2-El shapefile del mapa de rendimiento tiene que ser de Geometria: *Point*, no se soporta *Multipoint*. En Qgis, sobre la capa de puntos, Propiedades, Información, Geometria.
+En caso de ser una capa *Multipoint*, usar la herramienta *Multiparte a monoparte*
+3-El nombre que identifica la columna de rendimiento no tiene que tener simbolos raros (%,%,/,!) o espacios. Usar palabras simples como Rendimiento, Masa_seca, rinde, etc.
 
-
-
-
-El calculo del modelo del semivariograma fue automatizado para facilitar el uso del programa. Se ajusta un modelo por la siguiente función.
-
-```R
-error1 = 9999
-modelo_final = "aaa"
-seleccion_modelo<-function(){
-	modelos<-c("Sph","Exp","Lin","Gau","Ste","Mat")
-		for (i in 1:length(modelos)){
-                print(i)
-		modelovgm<- fit.variogram(semivariograma, fit.method=1, vgm(sill,modelos[i],distancia,nugget))
-	 	error<-(attr(modelovgm , 'SSErr'))
-			if(error < error1){
-                        modelo_final <<- modelos[i]
-		        error1<-error
- 			print(modelo_final)	
-			print(error1)	
-                        }
-            }
-}
-```
-Todos los datos ingresados en QGIS tienen que estar reproyectadas a coordenas planas. No funcionan con coordendas geograficas.
 
 Tw @FrancoFrolla
 email: frolla.franco@inta.gob.ar
