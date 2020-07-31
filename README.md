@@ -19,7 +19,7 @@ Conjunto de datos de prueba probados en:
 Qgis 3.4, Ubuntu 18.04,R 4.02, R proccesing 2.0 
 Qgis 3.10, Windows 10, R 4.02, R proccesing 2.0 
 
-#Requisitos para hacer los mapas:
+# Requisitos para hacer los mapas:
 
 1-Todos los datos ingresados en QGIS tienen que estar reproyectadas a coordenas planas. No funcionan con coordendas geograficas.
 2-El shapefile del mapa de rendimiento tiene que ser de Geometria: *Point*, no se soporta *Multipoint*. En Qgis, sobre la capa de puntos, Propiedades, Información, Geometria.
