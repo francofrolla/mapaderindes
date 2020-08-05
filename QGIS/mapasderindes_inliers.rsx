@@ -1,7 +1,7 @@
 ##Shape=vector point
 ##Rinde=field Shape
 ##output_plots_to_html
-##Distancia=number 20
+##Distancia=number 35
 ##showplots
 ##inliers=output vector
 
