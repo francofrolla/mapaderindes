@@ -1,6 +1,7 @@
 ##Shape=vector point
 ##Rinde=field Shape
 ##output_plots_to_html
+##Distancia=number 20
 ##showplots
 ##inliers=output vector
 
@@ -67,7 +68,7 @@ crs_imagen<-st_crs(Shape)
 filtro1 <- as_Spatial(Shape)
 
 cord <- filtro1@coords
-gri <- dnearneigh(cord,0,30)
+gri <- dnearneigh(cord,0,Distancia)
 lw <- nb2listw(gri, style = "W",zero.policy=TRUE)
 par(mfrow=c(1,1))
  
