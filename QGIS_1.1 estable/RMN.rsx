@@ -4,7 +4,7 @@
 #Output=output raster
 ##Zonificacion=output vector
 ##Zonas=selection 2;3;4
-##Reducir = number 2
+##Reducir = number 1
 
 
 #27/07/2020- Franco Frolla - Derechos reservados. 
