@@ -1,4 +1,3 @@
-##Version1.1 = group
 ##lista=multiple raster
 ##Poligono=vector polygon
 #Output=output raster
