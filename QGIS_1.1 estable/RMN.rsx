@@ -9,13 +9,18 @@
 
 
 #27/07/2020- Franco Frolla - Derechos reservados. 
+
+if("psych" %in% rownames(installed.packages()) == FALSE) {install.packages("psych")} else {print("psych ya esta..")}
+if("smoothr" %in% rownames(installed.packages()) == FALSE) {install.packages("smoothr")} else {print("smoothr ya esta..")}
+if("e1071" %in% rownames(installed.packages()) == FALSE) {install.packages("e1071")} else {print("e1071 ya esta..")}
+if("smoothr" %in% rownames(installed.packages()) == FALSE) {install.packages("smoothr")} else {print("smoothr ya esta..")}
+if("units" %in% rownames(installed.packages()) == FALSE) {install.packages("units")} else {print("units ya esta..")}
+if("rgeos" %in% rownames(installed.packages()) == FALSE) {install.packages("rgeos")} else {print("rgeos ya esta..")}
+
+
 require(psych)
 require(e1071)
 require(rgeos)
-
-if("smoothr" %in% rownames(installed.packages()) == FALSE) {install.packages("smoothr")} else {print("smoothr ya esta..")}
-
-
 require(smoothr)
 require(units)
 
