@@ -8,7 +8,8 @@
 type<-Ventana
 type1<-Metodo
 
-
+if("raster" %in% rownames(installed.packages()) == FALSE) {install.packages("raster")} else {print("raster ya esta..")}
+         
 library(raster)
 
 if(type==0){celda <- 3}
