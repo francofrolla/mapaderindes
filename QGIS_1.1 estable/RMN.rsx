@@ -1,4 +1,4 @@
-##Ambienteación = group
+##Ambientación = group
 ##lista=multiple raster
 ##Poligono=vector polygon
 #Output=output raster
