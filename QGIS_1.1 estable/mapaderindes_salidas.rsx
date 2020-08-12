@@ -27,6 +27,22 @@ if(Escala == 2){version_simplificada = "ni"}
 poligono <- as_Spatial(Poligono)
 
 
+if("sp" %in% rownames(installed.packages()) == FALSE) {install.packages("sp")} else {print("sp ya esta..")}
+if("gstat" %in% rownames(installed.packages()) == FALSE) {install.packages("gstat")} else {print("gstat ya esta..")}
+if("maptools" %in% rownames(installed.packages()) == FALSE) {install.packages("maptools")} else {print("maptools ya esta..")}
+if("rgeos" %in% rownames(installed.packages()) == FALSE) {install.packages("rgeos")} else {print("rgeos ya esta..")}
+if("raster" %in% rownames(installed.packages()) == FALSE) {install.packages("raster")} else {print("raster ya esta..")}
+if("automap" %in% rownames(installed.packages()) == FALSE) {install.packages("automap")} else {print("automap ya esta..")}
+if("spdep" %in% rownames(installed.packages()) == FALSE) {install.packages("spdep")} else {print("spdep ya esta..")}
+if("grid" %in% rownames(installed.packages()) == FALSE) {install.packages("grid")} else {print("grid ya esta..")}
+if("ggplotify" %in% rownames(installed.packages()) == FALSE) {install.packages("ggplotify")} else {print("ggplotify ya esta..")}
+if("gridExtra" %in% rownames(installed.packages()) == FALSE) {install.packages("gridExtra")} else {print("gridExtra ya esta..")}
+if("ggplot2" %in% rownames(installed.packages()) == FALSE) {install.packages("ggplot2")} else {print("ggplot2 ya esta..")}
+if("ggspatial" %in% rownames(installed.packages()) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
+
+
+
+
 library(sp)
 library(spdep)
 library(gstat)
