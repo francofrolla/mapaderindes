@@ -58,7 +58,8 @@ moran.plot2 <- function(x, listw, zero.policy=NULL, spChk=NULL,
   invisible(infl.xwx)
 }
 
-
+if("sp" %in% rownames(installed.packages()) == FALSE) {install.packages("sp")} else {print("sp ya esta..")
+if("spdep" %in% rownames(installed.packages()) == FALSE) {install.packages("spdep")} else {print("spdep ya esta..")}
 
 
 library(sp)
