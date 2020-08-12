@@ -1,4 +1,4 @@
-##Ambienteación = group
+##Ambientación = group
 ##Raster=raster
 ##Ambientes=vector polygon
 ##Zonas=field Ambientes
