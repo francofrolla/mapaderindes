@@ -28,6 +28,11 @@ sp.na.omit <- function(x, col.name = NULL, margin = 1) {
               }
             }   
 
+
+
+if("sp" %in% rownames(installed.packages()) == FALSE) {install.packages("sp")} else {print("sp ya esta..")}
+         
+
 library(sp)
 crs_imagen<-st_crs(Shape)
 
