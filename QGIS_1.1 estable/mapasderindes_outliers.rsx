@@ -49,11 +49,11 @@ DE <- sd(na.omit(myshp@data[,Rinde]))
 #myshp<-sp.na.omit(myshp[Rinde])
 #myshp<-sp.na.omit(myshp,col.name = Rinde)
 
-if(Metodo==0){LI <- Media-(3*DE); LS <- Media+(3*DE)}
-if(Metodo==1){LI <- Media-(2*DE); LS <- Media+(2*DE)}
-if(Metodo==2){LI <- quantile(datos,0.1); LS <- quantile(datos,0.9)}
-if(Metodo==3){LI <- quantile(datos,0.2); LS <- quantile(datos,0.8)}
-if(Metodo==4){LI <- Limite_minimo; LS <- Limite_maximo}
+if(Metodo==0){LI <- Limite_minimo; LS <- Limite_maximo}
+if(Metodo==1){LI <- Media-(3*DE); LS <- Media+(3*DE)}
+if(Metodo==2){LI <- Media-(2*DE); LS <- Media+(2*DE)}
+if(Metodo==3){LI <- quantile(datos,0.1); LS <- quantile(datos,0.9)}
+if(Metodo==4){LI <- quantile(datos,0.2); LS <- quantile(datos,0.8)}
 
 #if (LS > Maximo){LS = Maximo}
 #if (LI > Minimo){LI = Minimo}
