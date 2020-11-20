@@ -1072,7 +1072,7 @@ rmn<-function(nombre,Zonas,Reducir,Area_ha){
 
 
 
-	writeOGR(vectorizado, layer = paste(nombre," zonas",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
+	writeOGR(vectorizado, layer = paste(Nombre," zonas",sep=""), dsn="vectorizado R", driver="ESRI Shapefile",overwrite_layer=TRUE)
 
 }
 
