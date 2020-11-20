@@ -709,15 +709,16 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
          nombre1<-paste("Mapa-",nombre,".pdf",sep= "")
          ggsave(file=paste(ruta,"/",nombre1,sep=""), arreglo) 
           
+         print("ACA ARMO EL KML")   
           hacerkml<-function(){
-            proj4string(vectorizado) <<- CRS("+init=epsg:3857")
-            obj <- spTransform(vectorizado, CRS("+init=epsg:4326"))
-            inners<-c("")
+            #obj <- spTransform(vectorizado, CRS("+init=epsg:4326"))
+            obj<-vectorizado
+			inners<-c("")
             outers<-c("")
             union<-c("")
             superkml<-c("")
             stack<-c("")
-
+	    print(str(obj))	
             if (version_simplificada == "no"){
             cabezera<-c('<?xml version="1.0"?>
                         <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
@@ -736,12 +737,21 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
                         <rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
                         <size x="0" y="0" xunits="pixels" yunits="pixels"/>
                           </ScreenOverlay>')}
+		    if (version_simplificada == "ni"){
+            cabezera<-c('<?xml version="1.0"?>
+                        <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
+                        <Document><Style id="1"><LineStyle><width>2.0</width><color>ff1400aa</color></LineStyle><PolyStyle><color>ff1400aa</color></PolyStyle></Style><Style id="2"><LineStyle><width>2.0</width><color>ff2730d7</color></LineStyle><PolyStyle><color>ff2730d7</color></PolyStyle></Style><Style id="3"><LineStyle><width>2.0</width><color>ff598dfc</color></LineStyle><PolyStyle><color>ff598dfc</color></PolyStyle></Style><Style id="4"><LineStyle><width>2.0</width><color>ff8be0fe</color></LineStyle><PolyStyle><color>ff8be0fe</color></PolyStyle></Style><Style id="5"><LineStyle><width>2.0</width><color>ff8befd9</color></LineStyle><PolyStyle><color>ff8befd9</color></PolyStyle></Style><Style id="6"><LineStyle><width>2.0</width><color>ff60cf91</color></LineStyle><PolyStyle><color>ff60cf91</color></PolyStyle></Style><Style id="7"><LineStyle><width>2.0</width><color>ff50981a</color></LineStyle><PolyStyle><color>ff50981a</color></PolyStyle></Style><Style id="8"><LineStyle><width>2.0</width><color>ff882754</color></LineStyle><PolyStyle><color>ff882754</color></PolyStyle></Style>
+						<ScreenOverlay><name>Legend: Logo</name><Icon> <href>http://lmingenieria.com.ar/images/logo.png</href> </Icon> <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+                         <screenXY x="25" y="40" xunits="pixels" yunits="pixels"/>
+                        <rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+                        <size x="0" y="0" xunits="pixels" yunits="pixels"/>
+                          </ScreenOverlay>')}
             #ACTIVAR PARA SACAR LOS MULTYPOLYGON Y SILENCIAR LOS DE ABAJO
             #prefijo<-c('<Placemark><name>30</name><styleUrl>#1</styleUrl><Polygon>') 
             #sufijo<-c('</Polygon></Placemark>')
             fin<-c('</Document></kml>')
 
-            ########VARIANTE CON MULTYPOLYGON 
+
 
             #prefijo<-c('<Placemark><name>1</name><styleUrl>#1</styleUrl><MultiGeometry>') 
             sufijo<-c('</MultiGeometry></Placemark>')
@@ -749,28 +759,61 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
             sufijo.poligono<-c('</Polygon>')
 
             for (a in 1:length(obj@polygons)){
+			
+			
+			  if (version_simplificada == "ni"){
+			  
+			  #cols[1:nrow(vectorizado1@data["output"])]
+			  minimo_datos<- min(vectorizado@data["output"])
+  			  maximo_datos<- max(vectorizado@data["output"])
+			  	
+              indice_min<-which(cortes == minimo_datos)[[1]] 
+              indice_max<-which(cortes == maximo_datos)[[1]]
+					
+  				  if (obj$output[a] == minimo_datos){estilo.id = 1}
+				  if(is.na(match(cortes[indice_min+1],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+1]){estilo.id = 2}}
+   				  if(is.na(match(cortes[indice_min+2],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+2]){estilo.id = 3}}
+				  if(is.na(match(cortes[indice_min+3],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+3]){estilo.id = 4}}
+				  if(is.na(match(cortes[indice_min+4],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+4]){estilo.id = 5}}
+				  if(is.na(match(cortes[indice_min+5],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+5]){estilo.id = 6}}
+				  if(is.na(match(cortes[indice_min+6],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+6]){estilo.id = 7}}
+				  if(is.na(match(cortes[indice_min+7],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+7]){estilo.id = 8}}
+				  if(is.na(match(cortes[indice_min+8],cortes)) == FALSE){if (obj$output[a] == cortes[indice_min+8]){estilo.id = 8}}
+				  #>print(paste(obj$output[a],estilo.id))
+
+	
+                  #if (obj$output[a] == cortes[indice_min+7]){estilo.id = 8}
+                  #if (obj$output[a] == cortes[indice_min+6]){estilo.id = 7}
+         		  #if (obj$output[a] == cortes[indice_min+5]){estilo.id = 6}
+    			  #if (obj$output[a] == cortes[indice_min+4]){estilo.id = 5}
+                  #if (obj$output[a] == cortes[indice_min+3]){estilo.id = 4}
+         		  #if (obj$output[a] == cortes[indice_min+2]){estilo.id = 3}
+				
+              }
 
               if (version_simplificada == "no"){
-              #if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 8}
-              if (obj$var1.pred[a] == unname(cortes[7])){estilo.id = 7}
-              if (obj$var1.pred[a] == unname(cortes[6])){estilo.id = 6}
-              if (obj$var1.pred[a] == unname(cortes[5])){estilo.id = 5}
-              if (obj$var1.pred[a] == unname(cortes[4])){estilo.id = 4}
-              if (obj$var1.pred[a] == unname(cortes[3])){estilo.id = 3}
-              if (obj$var1.pred[a] == unname(cortes[2])){estilo.id = 2}
-              if (obj$var1.pred[a] == unname(cortes[1])){estilo.id = 1}
+
+
+              if (obj$output[a] == unname(cortes[7])){estilo.id = 7}
+              if (obj$output[a] == unname(cortes[6])){estilo.id = 6}
+              if (obj$output[a] == unname(cortes[5])){estilo.id = 5}
+              if (obj$output[a] == unname(cortes[4])){estilo.id = 4}
+              if (obj$output[a] == unname(cortes[3])){estilo.id = 3}
+              if (obj$output[a] == unname(cortes[2])){estilo.id = 2}
+              if (obj$output[a] == unname(cortes[1])){estilo.id = 1}
               }
 
               if (version_simplificada == "si"){
-              if (obj$var1.pred[a] == unname(cortes[4])){estilo.id = 4}
-              if (obj$var1.pred[a] == unname(cortes[3])){estilo.id = 3}
-              if (obj$var1.pred[a] == unname(cortes[2])){estilo.id = 2}
-              if (obj$var1.pred[a] == unname(cortes[1])){estilo.id = 1}
+
+              if (obj$output[a] == unname(cortes[4])){estilo.id = 4}
+              if (obj$output[a] == unname(cortes[3])){estilo.id = 3}
+              if (obj$output[a] == unname(cortes[2])){estilo.id = 2}
+              if (obj$output[a] == unname(cortes[1])){estilo.id = 1}
               }
 
 
 
-              prefijo<-sprintf('<Placemark><name>%s</name><styleUrl>#%s</styleUrl><MultiGeometry>',obj$var1.pred[a],estilo.id) 
+              prefijo<-sprintf('<Placemark><name>%s</name><styleUrl>#%s</styleUrl><MultiGeometry>',obj$output[a],estilo.id) 
 
 
               #print(paste("corrida numero",a))  
