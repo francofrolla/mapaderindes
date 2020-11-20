@@ -531,6 +531,18 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           if("gridExtra" %in% rownames(installed.packages()) == FALSE) {install.packages("gridExtra")} else {print("gridExtra ya esta..")}
           if("ggplot2" %in% rownames(installed.packages()) == FALSE) {install.packages("ggplot2")} else {print("ggplot2 ya esta..")}
           if("ggspatial" %in% rownames(installed.packages()) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
+	
+	library(sp)
+	library(spdep)
+	library(gstat)
+	library(raster)
+	library(rgdal)
+	library(rgeos)
+	library(grid)
+	library(ggplotify)
+	library(gridExtra)
+	library(ggplot2)
+	library(ggspatial)
 
           Kg_wls<-na.omit(Kg_wls)
           r<- raster(Kg_wls,layer=1)
