@@ -957,8 +957,6 @@ rmn<-function(nombre,lista,Poligono,Zonas,Reducir,Area_ha){
 
 	coordinates(datos1)<-c("x","y")
 
-	>str(datos1)
-	>print(Zonas)
 
 	if(Zonas==0){r <- rasterFromXYZ(data.frame(datos1@coords[,1], datos1@coords[,2],datos1@data["zonas2"]))}
 	if(Zonas==1){r <- rasterFromXYZ(data.frame(datos1@coords[,1], datos1@coords[,2],datos1@data["zonas3"]))}
