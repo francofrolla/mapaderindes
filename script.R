@@ -56,6 +56,7 @@ importar_poligono<-function(indicador_archivos){
       poligono<-readShapePoly(ruta_datos)
       proj4string(poligono) <- CRS("+init=epsg:4326")
       poligono <- spTransform(poligono, CRS("+init=epsg:3857"))
+      Poligono<<-poligono
       grdpts <- makegrid(poligono, cellsize = 2)
       spgrd <- SpatialPoints(grdpts, proj4string = CRS(proj4string(poligono)))
       spgrdWithin <- SpatialPixels(spgrd[poligono,])
