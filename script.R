@@ -549,58 +549,82 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           writeRaster(r, filename=paste(nombre,".tif",sep=""), bandorder='BIL', overwrite=TRUE)
           valores<-na.omit(Kg_wls@data[,1])
 
-          if (version_simplificada == "no"){
-                cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
-                
-                cortes<-quantile(valores, probs = c(0.10,0.20,0.40,0.50,0.60,0.80,0.9))
-                print(cortes)
-                #reclasifico los valores continuos de raster por la calsificación de tomas.
-                values_tg<-unname(cortes)
+         
 
-                lamatrix<-matrix(nrow=8,ncol=3)
-                lamatrix[1,1]<--Inf
-                lamatrix[1,2]<-values_tg[1]
-                lamatrix[1,3]<-values_tg[1]
-                lamatrix[8,1]<-values_tg[7]
-                lamatrix[8,2]<-Inf
-                lamatrix[8,3]<-values_tg[7]
+		if (version_simplificada == "no"){
+				cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850")
+				cortes<-quantile(valores, probs = c(0.10,0.20,0.40,0.50,0.60,0.80,1))
+				#reclasifico los valores continuos de raster por la calsificación de tomas.
+				values_tg<-unname(cortes)
 
-                for (i in 2:7){
-                a<-i-1
-                lamatrix[i,1]<-values_tg[a]
-                b<-i
-                lamatrix[i,2]<-values_tg[b]
-                a<-i
-                lamatrix[i,3]<-values_tg[a]
-                }
-          }
+				lamatrix<-matrix(nrow=8,ncol=3)
+				lamatrix[1,1]<--Inf
+				lamatrix[1,2]<-values_tg[1]
+				lamatrix[1,3]<-values_tg[1]
+				lamatrix[8,1]<-values_tg[7]
+				lamatrix[8,2]<-Inf
+				lamatrix[8,3]<-values_tg[7]
 
-          if (version_simplificada == "si"){
-             cols <- c("#d73027","#fee08b","#d9ef8b","#1a9850")
-             cortes<-quantile(valores, probs =c(0.2,0.5,0.8,1))
-             #son 5
-              #reclasifico los valores continuos de raster por la calsificación de tomas.
-              values_tg<-unname(cortes)
+				for (i in 2:7){
+				a<-i-1
+				lamatrix[i,1]<-values_tg[a]
+				b<-i
+				lamatrix[i,2]<-values_tg[b]
+				a<-i
+				lamatrix[i,3]<-values_tg[a]
+			    }
+			}
 
-              lamatrix<-matrix(nrow=4,ncol=3)
-              lamatrix[1,1]<--Inf
-              lamatrix[1,2]<-values_tg[1]
-              lamatrix[1,3]<-values_tg[1]
-              lamatrix[4,1]<-values_tg[3]
-              lamatrix[4,2]<-Inf
-              lamatrix[4,3]<-values_tg[4]
+		 if (version_simplificada == "si"){
+			     cols <- c("#d73027","#fee08b","#d9ef8b","#1a9850")
+			     cortes<-quantile(valores, probs =c(0.2,0.5,0.8,1))
+			     #son 5
+			      #reclasifico los valores continuos de raster por la calsificación de tomas.
+			      values_tg<-unname(cortes)
+
+			      lamatrix<-matrix(nrow=4,ncol=3)
+			      lamatrix[1,1]<--Inf
+			      lamatrix[1,2]<-values_tg[1]
+			      lamatrix[1,3]<-values_tg[1]
+			      lamatrix[4,1]<-values_tg[3]
+			      lamatrix[4,2]<-Inf
+			      lamatrix[4,3]<-values_tg[4]
 
 
-              for (i in 2:4){
-              a<-i-1
-              lamatrix[i,1]<-values_tg[a]
-              b<-i
-              lamatrix[i,2]<-values_tg[b]
-              a<-i
-              lamatrix[i,3]<-values_tg[a]
-              }
+			      for (i in 2:4){
+			      a<-i-1
+			      lamatrix[i,1]<-values_tg[a]
+			      b<-i
+			      lamatrix[i,2]<-values_tg[b]
+			      a<-i
+			      lamatrix[i,3]<-values_tg[a]
+			      }
 
-          }
+			}
+
+		if (version_simplificada == "ni"){
+			    cols <- c("#AA0014","#d73027","#fc8d59","#fee08b","#d9ef8b","#91cf60","#1a9850","#0b5229")
+				values_tg<-c(15,30,45,60,75,90,105,120)
+			    cortes<-values_tg
+			    lamatrix<-matrix(nrow=9,ncol=3)
+
+					lamatrix[1,1]<--Inf
+					lamatrix[1,2]<-values_tg[1]
+					lamatrix[1,3]<-values_tg[1]
+					lamatrix[9,1]<-values_tg[8]
+					lamatrix[9,2]<-Inf
+					lamatrix[9,3]<-values_tg[8]
+
+					for (i in 2:8){
+					a<-i-1
+					lamatrix[i,1]<-values_tg[a]
+					b<-i
+					lamatrix[i,2]<-values_tg[b]
+					a<-i
+					lamatrix[i,3]<-values_tg[a]
+					}
+
+       				 }
 
 
           rc <- reclassify(r, lamatrix,include.lowest=TRUE)
