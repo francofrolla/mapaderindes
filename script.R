@@ -563,7 +563,7 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
 
 
 
-exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
+exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada,descargar_suaveraster){
           if (que_mapa == "idw") {Kg_wls <<-prof.idw}
           
           if("sp" %in% rownames(installed.packages()) == FALSE) {install.packages("sp")} else {print("sp ya esta..")}
