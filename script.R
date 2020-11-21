@@ -213,7 +213,6 @@ moran.plot2 <- function(x, listw, zero.policy=NULL, spChk=NULL,
   coordinates(datos2)<-c("coords.x1","coords.x2")
   #spplot(datos2["Rinde"], col.regions=rampa, at=values)
 	
-  n<-nrow(filtro1@data[Rinde])-nrow(datos2[Rinde])
 	
   final<-nrow(datos2@data)
   n<-inicio-final
