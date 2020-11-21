@@ -189,7 +189,8 @@ moran.plot2 <- function(x, listw, zero.policy=NULL, spChk=NULL,
           
           
           
-          
+  inicio<-nrow(datos2@data)
+       
   filtro1<-datos2
   cord <- filtro1@coords
   gri <- dnearneigh(cord,0,distanciamax)
@@ -211,6 +212,12 @@ moran.plot2 <- function(x, listw, zero.policy=NULL, spChk=NULL,
   
   coordinates(datos2)<-c("coords.x1","coords.x2")
   #spplot(datos2["Rinde"], col.regions=rampa, at=values)
+	
+  n<-nrow(filtro1@data[Rinde])-nrow(datos2[Rinde])
+	
+  final<-nrow(datos2@data)
+  n<-inicio-final
+  print(paste("Se filtraron",n,"puntos"))
   proj4string(datos2) <- CRS("+init=epsg:3857")
   datos2 <<-datos2
 
@@ -293,6 +300,39 @@ validacion<-function(distancia){
 #unidad_de_cosecha<-"tn/ha"
 #Lote<- "La prueba4"
 #version_simplificada<-"si"  
+
+
+suavizado<-function(estadistico,Ventana){
+if (que_mapa == "idw") {Kg_wls <-prof.idw}
+
+type<-Ventana
+type1<-estadistico
+
+if("raster" %in% rownames(installed.packages()) == FALSE) {install.packages("raster")} else {print("raster ya esta..")}
+         
+library(raster)
+
+if(class(Kg_wls) != 'RasterLayer') {Kg_wls<-raster(Kg_wls)}
+
+
+if(type==3){celda <- 3}
+if(type==5){celda <- 5}
+if(type==9){celda <- 9}
+if(type==13){celda <- 13}
+
+print(paste(celda,"x",celda))
+ventana<-matrix(1,nrow=celda,ncol=celda)
+
+if(type1=="media"){suaveraster<-focal(Kg_wls,w=ventana,fun=mean,na.rm=TRUE); print("Se aplico la media")}
+if(type1=="mediana"){suaveraster<-focal(Kg_wls,w=ventana,fun=median,na.rm=TRUE); print("Se aplico la mediana")}
+if(type1=="maximo"){suaveraster<-focal(Kg_wls,w=ventana,fun=max,na.rm=TRUE); print("Se aplico la maxima")}
+if(type1=="minimo"){suaveraster<-focal(Kg_wls,w=ventana,fun=min,na.rm=TRUE); print("Se aplico la minima")}
+if(type1=="moda"){suaveraster<-focal(Kg_wls,w=ventana,fun=modal,na.rm=TRUE); print("Se aplico la moda")}
+
+plot(suaveraster)
+suaveraster<<-suaveraster
+
+}
 
 
 exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
@@ -517,6 +557,12 @@ exportar<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           
 }
 
+
+
+
+
+
+
 exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
           if (que_mapa == "idw") {Kg_wls <<-prof.idw}
           
@@ -544,9 +590,10 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada){
 	library(gridExtra)
 	library(ggplot2)
 	library(ggspatial)
-
+          
           Kg_wls<-na.omit(Kg_wls)
-          r<- raster(Kg_wls,layer=1)
+	  if(descargar_suaveraster == "si") { r<-suaveraster}  else {r<- raster(Kg_wls,layer=1)}
+          
           writeRaster(r, filename=paste(nombre,".tif",sep=""), bandorder='BIL', overwrite=TRUE)
           valores<-na.omit(Kg_wls@data[,1])
 
