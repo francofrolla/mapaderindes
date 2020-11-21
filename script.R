@@ -765,7 +765,7 @@ exportar2<-function(nombre,detalleslote,unidad_de_cosecha,version_simplificada,d
             union<-c("")
             superkml<-c("")
             stack<-c("")
-	    print(str(obj))	
+	    #print(str(obj))	
             if (version_simplificada == "no"){
             cabezera<-c('<?xml version="1.0"?>
                         <kml xmlns:xsd="http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd" version="1.0">
