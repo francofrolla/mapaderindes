@@ -85,8 +85,8 @@ data2<-remove.duplicates(datos)
 >print("Datos filtrados")
 >print(nrow(data2))
 
-#crs(data2)<-NA
-#crs(gri)<-NA
+crs(data2)<-NA
+crs(gri)<-NA
 
 >print("---------Distancia de interpolado---------------")
 >print(Distancia_busqueda)
