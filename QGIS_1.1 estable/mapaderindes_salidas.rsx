@@ -165,7 +165,13 @@ if (version_simplificada == "ni"){
           gIsValid(vectorizado, reason = T)
 
 	  #Calculo del area del lote por rendimiento
-	  vectorizado <- spTransform(vectorizado,CRS("+init=epsg:4326"))
+	  #25/02/2021, corregido algun lio con las librerias y actualizaciones de proj4
+          #vectorizado <- spTransform(vectorizado,CRS("+init=epsg:4326"))
+
+
+	  vectorizado <- sf::st_as_sf(vectorizado)
+	  vectorizado<-st_transform(vectorizado,4326)
+	  vectorizado <- as_Spatial(vectorizado)
 	  #calculo de area para cada zona para pasar al informe. 
 	  raster::area(vectorizado,na.rm=TRUE)/10000
 	  areas_lote<-raster::area(vectorizado)
