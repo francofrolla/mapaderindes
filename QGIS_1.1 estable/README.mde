@@ -1,1 +1,4 @@
 Version actualizada al 6/08/2020
+Version actualizada al 3/03/2021
+  En salidas se corrigieron problemas relacionados a cambios en paquetes de PROJ4 que impidian la reproyeccion de la capa.
+  Se agregaron 4 nuevas categorias de salidas 500-4000(kg); 1000-8000(kg); 0.5-4(Tn); 1-8(Tn); 
