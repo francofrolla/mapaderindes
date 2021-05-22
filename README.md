@@ -4,6 +4,9 @@ Una coleccion de funciones en R para filtrar puntos de rendimiento y generar map
 Prueba en vivo sobre Colab (requiere cuenta de Google)
 https://colab.research.google.com/drive/1ffs1YmgtqWQkEfvTiF82sVS1fSU6PfQg
 
+### ULTIMO VIDEO SUBIDO PARA REALIZAR MAPAS EN QGIS:
+https://youtu.be/fz-wO6WUr1w
+
 # mapaderindes/QGIS
 Mismas funciones pero ajustadas para su uso en QGIS mediante el complemento "Processing R Provider" (https://plugins.qgis.org/plugins/processing_r/). 
 
