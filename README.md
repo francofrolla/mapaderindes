@@ -1,7 +1,7 @@
 # mapaderindes
 Una coleccion de funciones en R para filtrar puntos de rendimiento y generar mapas interpolados por el metodo de Kriging. Exportando los mapas a pdf, shp, kml y tiff. 
 
-### ULTIMO VIDEO SUBIDO A YouTube con el paso a paso:
+### Ultimo video subido a YouTube con el paso a paso:
 https://youtu.be/fz-wO6WUr1w
 
 
