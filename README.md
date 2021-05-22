@@ -26,6 +26,7 @@ Qgis 3.10, Windows 10, R 4.02, R proccesing 2.0
 2-El shapefile del mapa de rendimiento tiene que ser de Geometria: *Point*, no se soporta *Multipoint*. En Qgis, sobre la capa de puntos, Propiedades, Información, Geometria.
 En caso de ser una capa *Multipoint*, usar la herramienta *Multiparte a monoparte* <br />
 3-El nombre que identifica la columna de rendimiento no tiene que tener simbolos raros (%,%,/,!) o espacios. Usar palabras simples como Rendimiento, Masa_seca, rinde, etc. <br />
+4-La geometria no debe incluir dimension Z (PointZ, PolygonZ no son soportados) <br />
 
 
 # email: frolla.franco@inta.gob.ar
