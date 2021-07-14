@@ -3,6 +3,8 @@ Una coleccion de funciones en R para filtrar puntos de rendimiento y generar map
 
 ### Ultimo video subido a YouTube con el paso a paso:
 https://youtu.be/fz-wO6WUr1w
+### Ultima versión:
+#QGIS 1.2
 
 
 # mapaderindes/QGIS
