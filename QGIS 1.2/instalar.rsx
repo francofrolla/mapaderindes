@@ -59,6 +59,12 @@ if(.Platform$OS.type == "unix") {
 	  if("gridExtra" %in% rownames(installed.packages()) == FALSE) {install.packages("gridExtra")} else {print("gridExtra ya esta..")}
 	  if("ggplot2" %in% rownames(installed.packages()) == FALSE) {install.packages("ggplot2")} else {print("ggplot2 ya esta..")}
 	  if("ggspatial" %in% rownames(installed.packages()) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
+	  if("foreach" %in% rownames(installed.packages()) == FALSE) {install.packages("foreach")} else {print("foreach ya esta..")}
+	  if("parallel" %in% rownames(installed.packages()) == FALSE) {install.packages("parallel")} else {print("parallel ya esta..")}
+	  if("doParallel" %in% rownames(installed.packages()) == FALSE) {install.packages("doParallel")} else {print("doParallel ya esta..")}
+	  if("doSNOW" %in% rownames(installed.packages()) == FALSE) {install.packages("doSNOW")} else {print("doSNOW ya esta..")}  
+	    if("RMySQL" %in% rownames(installed.packages()) == FALSE) {install.packages("RMySQL")} else {print("RMySQL ya esta..")}
+
 
        }
 
@@ -90,6 +96,12 @@ Instalar<-function(libreria){
 	  if("gridExtra" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("gridExtra")} else {print("gridExtra ya esta..")}
 	  if("ggplot2" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("ggplot2")} else {print("ggplot2 ya esta..")}
 	  if("ggspatial" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
+	  if("foreach" %in% rownames(installed.packages()) == FALSE) {install.packages("foreach")} else {print("foreach ya esta..")}
+	  if("parallel" %in% rownames(installed.packages()) == FALSE) {install.packages("parallel")} else {print("parallel ya esta..")}
+	  if("doParallel" %in% rownames(installed.packages()) == FALSE) {install.packages("doParallel")} else {print("doParallel ya esta..")}
+	  if("doSNOW" %in% rownames(installed.packages()) == FALSE) {install.packages("doSNOW")} else {print("doSNOW ya esta..")}  
+	  if("RMySQL" %in% rownames(installed.packages()) == FALSE) {install.packages("RMySQL")} else {print("RMySQL ya esta..")}
+
 }
 
 
