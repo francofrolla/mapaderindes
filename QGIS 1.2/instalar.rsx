@@ -61,3 +61,37 @@ if(.Platform$OS.type == "unix") {
 	  if("ggspatial" %in% rownames(installed.packages()) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
 
        }
+
+
+Instalar<-function(libreria){
+
+  print("Instalando paquetes para entorno Windows")
+          if("sp" %in% rownames(installed.packages(), lib= libreria) == FALSE) {install.packages("sp")} else {print("sp ya esta..")}
+          if("gstat" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("gstat")} else {print("gstat ya esta..")}
+          if("maptools" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("maptools")} else {print("maptools ya esta..")}
+          if("rgeos" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("rgeos")} else {print("rgeos ya esta..")}
+          if("raster" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("raster")} else {print("raster ya esta..")}
+          if("automap" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("automap")} else {print("automap ya esta..")}
+          if("spdep" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("spdep")} else {print("spdep ya esta..")}
+          if("psych" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("psych")} else {print("psych ya esta..")}
+          if("smoothr" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("smoothr")} else {print("smoothr ya esta..")}
+          if("e1071" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("e1071")} else {print("e1071 ya esta..")}
+          if("rgdal" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("rgdal")} else {print("rgdal ya esta..")}
+          if("units" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("units")} else {print("units ya esta..")}
+          if("sp" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("sp")} else {print("sp ya esta..")}
+          if("gstat" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("gstat")} else {print("gstat ya esta..")}
+	  if("maptools" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("maptools")} else {print("maptools ya esta..")}
+	  if("rgeos" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("rgeos")} else {print("rgeos ya esta..")}
+	  if("raster" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("raster")} else {print("raster ya esta..")}
+	  if("automap" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("automap")} else {print("automap ya esta..")}
+	  if("spdep" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("spdep")} else {print("spdep ya esta..")}
+	  if("grid" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("grid")} else {print("grid ya esta..")}
+	  if("ggplotify" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("ggplotify")} else {print("ggplotify ya esta..")}
+	  if("gridExtra" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("gridExtra")} else {print("gridExtra ya esta..")}
+	  if("ggplot2" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("ggplot2")} else {print("ggplot2 ya esta..")}
+	  if("ggspatial" %in% rownames(installed.packages(),lib= libreria) == FALSE) {install.packages("ggspatial")} else {print("ggspatial ya esta..")}
+}
+
+
+
+
