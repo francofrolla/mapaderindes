@@ -54,6 +54,8 @@ if("foreach" %in% rownames(installed.packages()) == FALSE) {install.packages("fo
 if("parallel" %in% rownames(installed.packages()) == FALSE) {install.packages("parallel")} else {print("parallel ya esta..")}
 if("doParallel" %in% rownames(installed.packages()) == FALSE) {install.packages("doParallel")} else {print("doParallel ya esta..")}
 if("doSNOW" %in% rownames(installed.packages()) == FALSE) {install.packages("doSNOW")} else {print("doSNOW ya esta..")}  
+if("RMySQL" %in% rownames(installed.packages()) == FALSE) {install.packages("RMySQL")} else {print("RMySQL ya esta..")}
+
 
 library(sp)
 library(spdep)
@@ -373,7 +375,7 @@ fechafinal<-Sys.time()
 
 comunicar_bd<-function(){
   #Me comunico con la base de datos
-  if("RMySQL" %in% rownames(installed.packages()) == FALSE) {install.packages("RMySQL")} else {print("RMySQL ya esta..")}
+  
   
   require(RMySQL)
   driver<-dbDriver("MySQL")
