@@ -1,11 +1,13 @@
 # mapaderindes
 Una coleccion de funciones en R para filtrar puntos de rendimiento y generar mapas interpolados por el metodo de Kriging. Exportando los mapas a pdf, shp, kml y tiff. 
+### Grupo de Telegram
+t.me/mapaderindes
 
 ## Versiones de R estables con el script: v 3.6.2 - v 4.1.1
 
 ### Ultimo video subido a YouTube con el paso a paso:
 https://youtu.be/fz-wO6WUr1w
-### Versión Desarrollo:
+### Versión beta - estable al 5/02/2022:
 #### QGIS 1.3
 ### Ultima versión:
 #### QGIS 1.2
@@ -38,7 +40,7 @@ En caso de ser una capa *Multipoint*, usar la herramienta *Multiparte a monopart
 4-La geometria no debe incluir dimension Z (PointZ, PolygonZ no son soportados) <br />
 
 
-# email: frolla.franco@inta.gob.ar
+# email: francofrolla@gmail.com
 
 
 Prueba en vivo sobre Colab (requiere cuenta de Google)
