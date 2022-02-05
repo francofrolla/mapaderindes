@@ -1,3 +1,2 @@
 Espacio para script mejorado mediante los aportes del grupo de Telegram. 
-En esta version los paquetes deben ser descomprimidos y colocados en un lugar a determinar. 
-Existe un error con el paquete spdep para nuevas instalaciones del programa. Se recomienda cambiar por la version adjuntada. 
+A partir del 2022 se generan conflictos con librerias de R. Se fijaron las dependencias y se comparten via Drive, en breve tiempo se cargara un video con la explicacion del proceso. 
