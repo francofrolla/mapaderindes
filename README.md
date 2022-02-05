@@ -11,7 +11,7 @@ https://youtu.be/fz-wO6WUr1w
 #### QGIS 1.3
 ### Ultima versión:
 #### QGIS 1.2
-### Versión estable:
+### Versión estable anterior:
 #### QGIS 1.1
 ### Versión antigua:
 #### QGIS 
